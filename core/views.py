@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
-from core.models import Leaderboard
+from core.models import Leaderboard, Profile
 from core.forms import LeaderboardSignUpForm, ProfileSignUpForm
 
 @login_required
@@ -11,7 +11,7 @@ def createleaderboard(request):
     if request.method == 'POST':
         newleaderboard = Leaderboard()
         newtourney.host = request.user.profile
-        form = LeaderboardForm(request.POST, request.FILES, instance=newleaderboard)
+        form = LeaderboardSignUpForm(request.POST, request.FILES, instance=newleaderboard)
         if form.is_valid():
             thisleaderboard = form.save()
             Member.objects.create(leaderboard=thisleaderboard,
@@ -20,8 +20,8 @@ def createleaderboard(request):
             thisleaderboard.save()
             return redirect(home)
     else:
-        form = LeaderboardForm(instance=Leaderboard())
-    return render(request, 'createleadboard.html', {'form': form})
+        form = LeaderboardSignUpForm(instance=Leaderboard())
+    return render(request, 'leaderboard-signup.html', {'form': form})
 
 def profile_home(request):
     """Profile home page."""
