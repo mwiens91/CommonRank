@@ -5,6 +5,14 @@ The home page of a user.
 {% endcomment %}
 
 {% block content %}
-	<p>Welcome {{ user.get_username }}!</p>
-
+	<section class="homepagecontainer">
+		<div class="homepage-column" style="margin-right: 0.69em">
+			<h2>{{ user.first_name }}'s leaderboards:</h2>
+			<p>lkajsdflkajsdfklja;kldsfja;ksjdf;lajsdfkl;jasldkfjakl;sdjflkajsdflk;jasdklfjaklsjdfklsdjf</p>
+		</div>
+		<div class="homepage-column" style="margin-left: 0.69em">
+			<h2>Notifications</h2>
+			<p>lkajsdflkajsdfklja;kldsfja;k sjdf;lajs dfkl;jasldkfjakl;sdjfl kajsdflk; jasdklfjaklsjdfklsdjf</p>
+		</div>
+	</section>
 {% endblock %}
