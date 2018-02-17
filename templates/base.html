@@ -6,7 +6,10 @@ main navigation links.
 <!DOCTYPE html>
 <html lang="en">
 	<head>
+		{# Load font #}
 		<link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,400b,400bi,700,700i,700b,700bi" rel=stylesheet>
+
+		{# Load CSS #}
 		{% load static %}
 		<link rel="stylesheet" type="text/css" href="{% static "/style.css" %}">
 	
@@ -14,17 +17,27 @@ main navigation links.
 		<link rel="shortcut icon" href="{% static "/favicon.ico" %}" type="image/x-icon">
 		<link rel="icon" href="{% static "/favicon.ico" %}" type="image/x-icon">
 
+		{# Make the viewport scale to device #}
+		<meta name=viewport content="width=device-width, initial-scale=1">
+
+		{# The page title #}
 		<title>{% block title %}CommonRank{% endblock %}</title>
 	</head>
 	<body>
 		<div class="bodywrapper">
-			<div style="text-align: center">
+			<div class="maintitlebox">
 
 				{# The app title #}
-				<h2>CommonRank</h2>
-				<p>-----</p>
+				<div class="logobox">CR</div>
+				<div class="apptitlebox">{% block toppagetitle %}CommonRank{% endblock %}</div>
+				<div class="appsettingsbox">
+					<div></div>
+					<div><a href="">settings</a></div>
+					<div><a href="{% url 'logout' %}">logout</a></div>
+				</div>
 
 			</div>
+			<hr>
 
 			{# Extend the body here #}
 			{% block content %}<div>Here is content</div>{% endblock %}

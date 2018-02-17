@@ -15,7 +15,7 @@ class Profile(models.Model):
     def __str__(self):
         return '%s' % self.user.username
 
-class Leaderboard(models.Model)
+class Leaderboard(models.Model):
 
     info = models.TextField(max_length=200,
                             null=True,
@@ -23,10 +23,52 @@ class Leaderboard(models.Model)
     name = models.CharField(max_length=200,
                             null=True,
                             blank=False,)
+    challenge_enabled = models.BooleanField(null=False, blank=True)
+
+    deadline_time = models.IntegerField(blank=2100, null=True)
+    deadline_length = models.IntegerField(blank=14, null=True)
+    elo_sensitivity = models.FloatField(blank=0.5, null=False)
+
+
     def __str__(self):
         return '%s' % self.name
 
-class Member(models.Model)
+    def invite_member(self, profile):
+        Member.objects.create(leaderboard=self, profileuser=profile)
+
+    def delete_member(self, profile):
+        Member.objects.get(profileuser=profile).delete()
+
+    def enable_challenge(self):
+        self.challenge_enabled = True
+
+    def disable_challenge(self):
+        self.challenge_enabled = False
+
+    def toggle_challenge(self):
+        if self.challenge_enabled == True:
+            self.disable_challenge()
+        else:
+            self.enable_challenge()
+
+    def set_challenge_deadline(self, hour, minute):
+        self.deadline_time = (hour * 100) + minute
+
+    def set_challenge_duration(self, days):
+        self.deadline_length = days
+
+    def set_sensitivity(self, sensitivity):
+        self.elo_sensitivity = sensitivity
+
+    def add_privilege(self, user):
+        subject = Member.objects.get(profileuser=user)
+        subject.increase_privilege()
+
+    def remove_privilege(self, user):
+        subject = Member.objects.get(profileuser=user)
+        subject.decrese_privilege()
+
+class Member(models.Model):
 
     leaderboard = models.ForeignKey(Leaderboard,
                                     on_delete=models.CASCADE,
@@ -36,10 +78,17 @@ class Member(models.Model)
                                     on_delete=models.CASCADE,
                                     null=True,
                                     blank=True,)
-    elo = models.FloatField(default='1500')
-    admin = models.BooleanField()
+    elo = models.FloatField()
+    privilege = models.IntegerField(default=1, null=False)
+    def increase_privilege(self):
+        if self.privilege <= 4:
+            self.privilege += 1
 
-class Challenge(models.Model)
+    def remove_privilege(self):
+        if self.privilege >= 0:
+            self.privilege -= 1
+
+class Challenge(models.Model):
 
     challenger = models.ManyToManyField(Member,
                                         related_name='challenger',)
@@ -52,14 +101,14 @@ class Challenge(models.Model)
     punishment = models.BooleanField()
     expiry = models.TimeField()
 
-class Notification(models.Model)
+class Notification(models.Model):
 
     profileuser = models.ForeignKey(Profile,
                                     on_delete=models.CASCADE,
                                     null=True,
                                     blank=True,)
 
-class Match(models.Model)
+class Match(models.Model):
 
     player1 = models.ManyToManyField(Member,
                                         related_name='player1',)
@@ -74,7 +123,7 @@ class Match(models.Model)
     loser = models.ManyToManyField(Member,
                                         related_name='loser',)
 
-class Report(models.Model)
+class Report(models.Model):
 
     match = models.ForeignKey(Match,
                                 on_delete=models.CASCADE,

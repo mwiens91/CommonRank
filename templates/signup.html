@@ -1,0 +1,9 @@
+{% extends 'baseform.html' %}
+
+{% comment %}
+The user signup form.
+{% endcomment %}
+
+{% block formtitle %}Register{% endblock %}
+
+{% block formbottom %}or <a href='{% url 'login' %}'>log in</a>{% endblock %}

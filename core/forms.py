@@ -9,13 +9,13 @@ class ProfileSignUpForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'username', 'email'
+        fields = ('first_name', 'last_name', 'username', 'email',
                     'bio')
 
-class LeaderboardForm(forms.ModelForm):
+class LeaderboardSignUpForm(forms.ModelForm):
 
     members = forms.ModelMultipleChoiceField(queryset=User.objects.all())
 
     class Meta:
         model = Leaderboard
-        fields = ('name', 'info', 'members',)
+        fields = ('name', 'info', 'members','deadline_time','deadline_length',)

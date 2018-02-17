@@ -6,11 +6,17 @@ body {
 	background-color: white;
 	color: black;
 }
+@media (max-width: 699px) {
+	body {
+		margin-left: 0.5em;
+		margin-right: 0.5em;
+	}
+}
 
 /* The box giving the maximum page width (for all pages) */
 .bodywrapper {
+	max-width: 900px;
 	margin: 0 auto;
-	max-width: 600px;
 }
 
 /* The error text on the for forms*/
@@ -25,11 +31,54 @@ input[type=text],
 input[type=email],
 input[type=password],
 input[type=url],
-select
+select,
+textarea
 {
 	width: 100%;
 	-ms-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
+}
+
+/* The box containing the main title and links */
+.maintitlebox {
+	display: flex;
+	position: relative;
+	justify-content: start;
+	align-items: center;
+}
+@media (max-width: 699px) {
+	.maintitlebox {
+		flex-direction: column;
+	}
+}
+.logobox {
+	background: black;
+	color: white;
+	height: 53px;
+	width: 69px;
+	justify-content: center;
+	align-items: center;
+	display: flex;
+	font-size: 250%;
+	font-weight: bold;
+}
+.apptitlebox {
+	margin-left: 5px;
+	font-size: 269%;
+	font-weight: bold;
+	flex-grow: 1;
+}
+.appsettingsbox {
+	text-align: center;
+	margin-top: 10px;
+	flex-basis: 19px;
+}
+
+/* Tweak the indentation and padding of lists */
+ul {
+	list-style-type: square;
+	margin-top: 0.769em;
+	margin-bottom: 0.769em;
 }

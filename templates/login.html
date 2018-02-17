@@ -4,8 +4,10 @@
 The login page.
 {% endcomment %}
 
+{% block title %}Log in{% endblock %}
+
 {% block formtitle %}Log in{% endblock %}
 
 {% block submitbuttontext %}Log in{% endblock %}
 
-{% block formbottom %}or <a href=''>sign up</a>{% endblock %}
+{% block formbottom %}or <a href='{% url 'signup' %}'>sign up</a>{% endblock %}
