@@ -9,6 +9,11 @@ main navigation links.
 		<link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,400b,400bi,700,700i,700b,700bi" rel=stylesheet>
 		{% load static %}
 		<link rel="stylesheet" type="text/css" href="{% static "/style.css" %}">
+	
+		{# Favicon #}
+		<link rel="shortcut icon" href="{% static "/favicon.ico" %}" type="image/x-icon">
+		<link rel="icon" href="{% static "/favicon.ico" %}" type="image/x-icon">
+
 		<title>{% block title %}CommonRank{% endblock %}</title>
 	</head>
 	<body>
