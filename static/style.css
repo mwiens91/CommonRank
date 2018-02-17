@@ -25,7 +25,8 @@ input[type=text],
 input[type=email],
 input[type=password],
 input[type=url],
-select
+select,
+textarea
 {
 	width: 100%;
 	-ms-box-sizing: border-box;
