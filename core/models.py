@@ -23,7 +23,7 @@ class Leaderboard(models.Model):
     name = models.CharField(max_length=200,
                             null=True,
                             blank=False,)
-    challenge_enabled = models.BooleanField(null=True, blank=True)
+    challenge_enabled = models.BooleanField(null=False, blank=True)
 
     deadline_time = models.IntegerField(blank=2100, null=True)
     deadline_length = models.IntegerField(blank=14, null=True)
