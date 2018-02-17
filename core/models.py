@@ -80,6 +80,13 @@ class Member(models.Model):
                                     blank=True,)
     elo = models.FloatField()
     privilege = models.IntegerField(default=1, null=False)
+    def increase_privilege(self):
+        if self.privilege <= 4:
+            self.privilege += 1
+
+    def remove_privilege(self):
+        if self.privilege >= 0:
+            self.privilege -= 1
 
 class Challenge(models.Model):
 
