@@ -19,6 +19,7 @@ from django.urls import path
 from core import views as core_views
 
 urlpatterns = [
+    path(r'', core_views.profile_home, name='home'),
     path('admin/', admin.site.urls),
     path(r'login/', auth_views.login, {'template_name': 'login.html'}, name='login'),
     path(r'logout/', auth_views.logout, {'next_page': 'login'}, name='logout'),

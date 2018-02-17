@@ -1,5 +1,11 @@
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from core.forms import ProfileSignUpForm
+
+def profile_home(request):
+    """Profile home page."""
+    return render(request, 'home.html')
 
 def profile_signup(request):
     """Profile sign up page."""
