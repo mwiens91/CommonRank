@@ -1,0 +1,35 @@
+/* The page */
+body {
+	font-family: Roboto, Helvetica, sans-serif;
+	position: relative;
+	margin: 2em;
+	background-color: white;
+	color: black;
+}
+
+/* The box giving the maximum page width (for all pages) */
+.bodywrapper {
+	margin: 0 auto;
+	max-width: 600px;
+}
+
+/* The error text on the for forms*/
+.formerrortext{
+	color: red;
+	font-size: 11px;
+	padding: 5px 0;
+}
+
+/* Input and boxes */
+input[type=text],
+input[type=email],
+input[type=password],
+input[type=url],
+select
+{
+	width: 100%;
+	-ms-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}

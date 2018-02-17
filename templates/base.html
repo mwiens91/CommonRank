@@ -1,0 +1,32 @@
+{% comment %}
+The base page which all other pages inherit from. Contains title and
+main navigation links.
+{% endcomment %}
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,400b,400bi,700,700i,700b,700bi" rel=stylesheet>
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static "/style.css" %}">
+		<title>{% block title %}CommonRank{% endblock %}</title>
+	</head>
+	<body>
+		<div class="bodywrapper">
+			<div style="text-align: center">
+
+				{# The app title #}
+				<h2>CommonRank</h2>
+				<p>-----</p>
+
+			</div>
+
+			{# Extend the body here #}
+			{% block content %}<div>Here is content</div>{% endblock %}
+
+		</div>
+	</body>
+</html>
+
+{# Load any JS files if needed #}
+{% block javascript %}{% endblock %}
