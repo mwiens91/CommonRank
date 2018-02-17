@@ -3,7 +3,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from core.models import Leaderboard
-from core.forms import LeaderboardForm, ProfileSignUpForm
+from core.forms import LeaderboardSignUpForm, ProfileSignUpForm
 
 @login_required
 def createleaderboard(request):
