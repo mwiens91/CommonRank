@@ -82,3 +82,14 @@ ul {
 	margin-top: 0.769em;
 	margin-bottom: 0.769em;
 }
+
+/* The container for home page columns */
+.homepagecontainer {
+	display: flex;
+}
+.homepage-column {
+	flex: 1;
+	overflow: auto;
+	word-wrap: break-word;
+	max-width: 50%;
+}
