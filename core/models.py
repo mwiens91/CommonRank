@@ -88,6 +88,19 @@ class Member(models.Model):
         if self.privilege >= 0:
             self.privilege -= 1
 
+    #only winners can submit matches
+    def submit_match(self,loser,leaderboard_id):
+        match = create_match(self,loser,leaderboard_id)
+        match.winner = self
+        match.loser = loser
+        match.state = 1 #unverified
+
+    #only losers can verify matches
+    def verify_match(self,match_id)
+        match = Match.objects.get(pk=match_id)
+        match.state = 2 #verified
+        match.winner, match.loser = update_elo(match.winner,match.loser,1)
+
 class Challenge(models.Model):
 
     challenger = models.ManyToManyField(Member,
@@ -122,6 +135,14 @@ class Match(models.Model):
                                         related_name='winner',)
     loser = models.ManyToManyField(Member,
                                         related_name='loser',)
+    #create_match is called when a challenge is created or when a regular match is submitted. Creates match object and fills in necessary information, then calls add_match to add the match to the leaderboard
+    def create_match(player1,player2,leaderboard_id):
+       match = self.create(player1=player1,
+               player2=player2,
+               leaderboard=Leaderboard.objects.get(pk=leaderboard_id),
+               state=0) #state 0 means challenged but not accepted yet)
+
+
 
 class Report(models.Model):
 
