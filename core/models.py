@@ -36,7 +36,7 @@ class Member(models.Model)
                                     on_delete=models.CASCADE,
                                     null=True,
                                     blank=True,)
-    elo = models.FloatField()
+    elo = models.FloatField(default='1500')
     admin = models.BooleanField()
 
 class Challenge(models.Model)
