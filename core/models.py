@@ -15,7 +15,7 @@ class Profile(models.Model):
     def __str__(self):
         return '%s' % self.user.username
 
-class Leaderboard(models.Model)
+class Leaderboard(models.Model):
 
     info = models.TextField(max_length=200,
                             null=True,
@@ -26,7 +26,7 @@ class Leaderboard(models.Model)
     def __str__(self):
         return '%s' % self.name
 
-class Member(models.Model)
+class Member(models.Model):
 
     leaderboard = models.ForeignKey(Leaderboard,
                                     on_delete=models.CASCADE,
@@ -38,7 +38,7 @@ class Member(models.Model)
                                     blank=True,)
     elo = models.FloatField()
 
-class Challenge(models.Model)
+class Challenge(models.Model):
 
     challenger = models.ManyToManyField(Member,
                                         related_name='challenger',)
@@ -51,14 +51,14 @@ class Challenge(models.Model)
     punishment = models.BooleanField()
     expiry = models.TimeField()
 
-class Notification(models.Model)
+class Notification(models.Model):
 
     profileuser = models.ForeignKey(Profile,
                                     on_delete=models.CASCADE,
                                     null=True,
                                     blank=True,)
 
-class Match(models.Model)
+class Match(models.Model):
 
     player1 = models.ManyToManyField(Member,
                                         related_name='player1',)
@@ -73,7 +73,7 @@ class Match(models.Model)
     loser = models.ManyToManyField(Member,
                                         related_name='loser',)
 
-class Report(models.Model)
+class Report(models.Model):
 
     match = models.ForeignKey(Match,
                                 on_delete=models.CASCADE,
