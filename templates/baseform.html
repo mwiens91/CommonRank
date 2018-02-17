@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% comment %}
+The main template for forms that most forms inherit from.
+{% endcomment %}
+
+{% block content %}
+	<div style="text-align: center">
+
+		{# The title that goes above the form #}
+		<h3>{% block formtitle %}{% endblock %}<h3>
+
+	</div>
+
+	<div style="text-align: center">
+
+		{# Show errors if form failed to validate #}
+		{% if form.errors %}
+			<p style="color: red">Please fix the errors below :)</p>
+		{% endif %}
+
+	</div>
+
+	<form method="post" style="max-width: 300px; margin: 0 auto;" {% block extraformtagoptions %}{% endblock %}>
+		{% csrf_token %}
+
+		<input type="hidden" name="next" value="{{ next }}" />
+		{% for field in form %}
+			<p>
+				{{ field.label_tag }}<br>
+
+				{% for error in field.errors %}
+					<span class="formerrortext">{{ error }}</span>
+				{% endfor %}
+
+				{{ field }}<br>
+
+				{% if field.help_text %}
+					<small style="color: grey">{{ field.help_text | safe }}</small>
+				{% endif %}
+			</p>
+		{% endfor %}
+
+		{# The submit button, whose text can be changed #}
+		<button type="submit">
+			{% block submitbuttontext %}Submit{% endblock %}
+		</button>
+	</form>
+
+	<div style="padding-top: 1.69em; text-align: center;">
+
+		{# Add additional content to the bottom of the form if desired #}
+		{% block formbottom %}{% endblock %}
+
+	</div>
+{% endblock %}
