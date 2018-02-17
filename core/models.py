@@ -37,6 +37,7 @@ class Member(models.Model)
                                     null=True,
                                     blank=True,)
     elo = models.FloatField()
+    admin = models.BooleanField()
 
 class Challenge(models.Model)
 
