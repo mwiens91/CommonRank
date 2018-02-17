@@ -23,6 +23,7 @@ def createleaderboard(request):
         form = LeaderboardForm(instance=Leaderboard())
     return render(request, 'createleadboard.html', {'form': form})
 
+@login_required
 def profile_home(request):
     """Profile home page."""
     return render(request, 'home.html')
