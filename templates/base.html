@@ -6,7 +6,10 @@ main navigation links.
 <!DOCTYPE html>
 <html lang="en">
 	<head>
+		{# Load font #}
 		<link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,400b,400bi,700,700i,700b,700bi" rel=stylesheet>
+
+		{# Load CSS #}
 		{% load static %}
 		<link rel="stylesheet" type="text/css" href="{% static "/style.css" %}">
 	
@@ -14,6 +17,10 @@ main navigation links.
 		<link rel="shortcut icon" href="{% static "/favicon.ico" %}" type="image/x-icon">
 		<link rel="icon" href="{% static "/favicon.ico" %}" type="image/x-icon">
 
+		{# Make the viewport scale to device #}
+		<meta name=viewport content="width=device-width, initial-scale=1">
+
+		{# The page title #}
 		<title>{% block title %}CommonRank{% endblock %}</title>
 	</head>
 	<body>
