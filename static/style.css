@@ -164,8 +164,11 @@ tbody th{
 
 /* The grid showing the matches to verify */
 .verifymatchgrid{
-	display: grid;
+	display: flex;
+	flex-direction: column;
 	background-color: #fff;
+	justify-content: center;
+	align-items: center;
 }
 .verifymatchbox {
 	display: flex;
