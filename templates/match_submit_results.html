@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% comment %}
+The upcoming  match result submission form.
+{% endcomment %}
+
+{% block title %}{{ leaderboard.name }} | submit match results{% endblock %}
+
+{% block toppagetitle %}{{ leaderboard.name }}{% endblock %}
+
+{% block content %}
+	<div style="text-align: center">
+		<h3>Submit match results</h3>
+
+		<div>Did you bless up <strong>Tyler 1</strong>?</div>
+
+		<form method="post" action="">
+			<button style="margin-top: 1em" type="submit">
+				yeah dawg
+			</button>
+		</form>
+
+		<form method="post" action="">
+			<button style="margin-top: .5em" type="submit">
+				no dawg
+			</button>
+		</form>
+	</div>
+
+
+{% endblock %}

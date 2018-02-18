@@ -95,6 +95,23 @@ def match_history(request, leaderboard_id):
                   {'leaderboard': thisleaderboard,
                    'matches': matches})
 
+def match_submit_results(request, leaderboard_id, member_id, match_id):
+    """Submit match results."""
+    # Get the instance of this leaderboard
+    thisleaderboard = Leaderboard.objects.get(id=leaderboard_id)
+
+    # Get the member
+    this_member = Member.objects.get(id=member_id)
+
+    # Get the match
+    this_match = Match.objects.get(id=match_id)
+
+    return render(request,
+                  'match_submit_results.html',
+                  {'leaderboard': thisleaderboard,
+                   'member': this_member,
+                   'match': this_match})
+
 def match_verify_list(request, leaderboard_id, member_id):
     """Shows a list of matches a member needs to verify."""
     # Get the instance of this leaderboard

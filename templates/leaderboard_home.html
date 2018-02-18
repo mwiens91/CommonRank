@@ -59,14 +59,7 @@ The home page of a leaderboard.
 					<tr>
 						<td>{{ match.player1.profileuser.user.username }}</td>
 						<td>{{ match.player2.profileuser.user.username }}</td>
-						<td>
-							<form action="" method="post">
-								{% csrf_token %}
-								<button type="submit">
-									submit results
-								</button>
-							</form>
-						</td>
+						<td><a href='{% url 'match_submit_results' leaderboard.id member.id match.id %}'>submit results</a></td>
 					</tr>
 				{% endfor %}
 			</tbody>
