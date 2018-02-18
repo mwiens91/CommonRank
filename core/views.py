@@ -109,13 +109,14 @@ def match_history(request, leaderboard_id, member_id):
                    'member': this_member,
                    'matches': matches})
 
-def match_submit_results(request, leaderboard_id, member_id, match_id):
+def match_submit_results(request, leaderboard_id, member_id, match_id, opponent_id):
     """Submit match results."""
     # Get the instance of this leaderboard
     thisleaderboard = Leaderboard.objects.get(id=leaderboard_id)
 
-    # Get the member
+    # Get the members
     this_member = Member.objects.get(id=member_id)
+    opponent = Member.objects.get(id=opponent_id)
 
     # Get the match
     this_match = Match.objects.get(id=match_id)
@@ -123,11 +124,17 @@ def match_submit_results(request, leaderboard_id, member_id, match_id):
     # Update the match if posting
     if request.method == 'POST':
         if request.POST['result'] == 'win':
-            # Do some stuff
-            pass
+            this_match.winner = this_member
+            this_match.loser = opponent
+            this_match.state = 1
+            this_match.save()
         else:
-            # Do some other stuff
-            pass
+            this_match.winner = opponent
+            this_match.loser = this_member
+            this_match.state = 2
+            this_match.save()
+
+            update_elo(this_match.winner, this_match.loser, thisleaderboard.elo_sensitivity)
 
         # Redirect to leaderboard homepage
         return redirect(leaderboard_home,
@@ -136,16 +143,16 @@ def match_submit_results(request, leaderboard_id, member_id, match_id):
 
     # Get the opponent's username
     if this_match.player1.id == member_id:
-        opponent_name = this_match.player2.profileuser.user.username
+        opponent = this_match.player2
     else:
-        opponent_name = this_member.profileuser.user.username
+        opponent = this_member
 
     return render(request,
                   'match_submit_results.html',
                   {'leaderboard': thisleaderboard,
                    'member': this_member,
                    'match': this_match,
-                   'opponent_name': opponent_name})
+                   'opponent': opponent})
 
 def match_verify_list(request, leaderboard_id, member_id):
     """Shows a list of matches a member needs to verify."""

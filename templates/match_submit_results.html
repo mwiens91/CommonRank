@@ -12,11 +12,11 @@ The upcoming  match result submission form.
 	<div style="text-align: center">
 		<h3>Submit match results</h3>
 
-		<div>Did you beat <strong>{{ opponent_name }}</strong>?</div>
+		<div>Did you beat <strong>{{ opponent.profileuser.user.username }}</strong>?</div>
 
 		<div style="display: flex; justify-content: center; padding-top: 1em">
 			<div>
-				<form method="post" action="{% url 'match_submit_results' leaderboard.id member.id match.id %}">
+				<form method="post" action="{% url 'match_submit_results' leaderboard.id member.id match.id opponent.id %}">
 					{% csrf_token %}
 					<input type=hidden name="result" value="win">
 					<button style="margin: 0.24em" type="submit">
@@ -26,7 +26,7 @@ The upcoming  match result submission form.
 			</div>
 
 			<div>
-				<form method="post" action="{% url 'match_submit_results' leaderboard.id member.id match.id %}">
+				<form method="post" action="{% url 'match_submit_results' leaderboard.id member.id match.id opponent.id %}">
 					{% csrf_token %}
 					<input type=hidden name="result" value="loss">
 					<button style="margin: 0.24em" type="submit">
