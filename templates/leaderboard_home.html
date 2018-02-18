@@ -16,7 +16,7 @@ The home page of a leaderboard.
 		<li><a href='{% url 'match_verify_list' leaderboard.id member.id %}'>Verify matches</li>
 		<li><a href='{% url 'match_history' leaderboard.id %}'>Match history</a></li>
 		<li><a href='{% url 'leaderboard_rankings' leaderboard.id %}'>Rankings</a></li>
-		<li>Invite members</li>
+        <li><a href='{% url 'invitations' %}'>Invite members</a></li>
 	</ul>
 
 	<h2>Top {{ N }}</h2>
