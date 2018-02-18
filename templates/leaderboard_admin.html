@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% comment %}
+The home page of a leaderboard.
+{% endcomment %}
+
+{% block title %}{{ leaderboard.name }}{% endblock %}
+
+{% block toppagetitle %}{{ leaderboard.name }}{% endblock %}
+
+{% block content %}
+
+	<h2>Members</h2>
+	<table class="leaderboardadmintable">
+		<tbody>
+			<tr>
+				<th></th>
+				<th>Username</th>
+                <th>Privilege</th>
+				<th>Promote</th>
+				<th>Demote</th>
+				<th>Kick</th>
+			</tr>
+
+			{# List the top N members of the leaderboard #}
+			{% for member in topmembers %}
+				<tr>
+					<td>{{ forloop.counter }}</td>
+					<td>{{ member.profileuser.user.username }}</td>
+					<td>{{ member.privilege }}</td>
+                    <td></td>
+                </tr>
+			{% endfor %}
+
+		</tbody>
+	</table>
+{% endblock %}
