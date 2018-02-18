@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 import datetime
-from update_elo import update_elo
+from core.update_elo import update_elo
 
 class Profile(models.Model):
 
