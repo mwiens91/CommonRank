@@ -102,7 +102,7 @@ class Member(models.Model):
     privilege = models.IntegerField(default=1, null=False)
 
     wins = models.PositiveIntegerField(default=0, null=False)
-    loses = models.PositiveIntegerField(default=0, null=False)
+    losses = models.PositiveIntegerField(default=0, null=False)
 
     def __str__(self):
         return '%s' % self.profile.user.username
