@@ -12,7 +12,7 @@ The upcoming  match result submission form.
 	<div style="text-align: center">
 		<h3>Submit match results</h3>
 
-		<div>Did you bless up <strong>{{ opponent_name }}</strong>?</div>
+		<div>Did you beat <strong>{{ opponent_name }}</strong>?</div>
 
 		<div style="display: flex; justify-content: center; padding-top: 1em">
 			<div>
@@ -20,7 +20,7 @@ The upcoming  match result submission form.
 					{% csrf_token %}
 					<input type=hidden name="result" value="win">
 					<button type="submit">
-						yeah dawg
+						yes
 					</button>
 				</form>
 			</div>
@@ -30,7 +30,7 @@ The upcoming  match result submission form.
 					{% csrf_token %}
 					<input type=hidden name="result" value="loss">
 					<button type="submit">
-						no dawg
+						no
 					</button>
 				</form>
 			</div>

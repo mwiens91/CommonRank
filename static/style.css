@@ -159,7 +159,7 @@ tbody th{
 	width: 15em;
 }
 .upcomingmatchestable tbody th:nth-child(3){
-	width: 6em;
+	width: 6.9em;
 }
 
 /* The grid showing the matches to verify */
