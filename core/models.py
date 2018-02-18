@@ -170,7 +170,7 @@ class Match(models.Model):
                                 null=True,
                                 blank=True,
                                 related_name='loser',)
-    deadline = models.DateTimeField(blank=datetime.date.today().timedelta(days=leaderboard.deadline_length), null=False)
+    #deadline = models.DateTimeField(blank=datetime.date.today() + datetime.timedelta(days=leaderboard.deadline_length), null=False)
     #create_match is called when a challenge is created or when a regular match is submitted. Creates match object and fills in necessary information, then calls add_match to add the match to the leaderboard
     def create_match(player1,player2,leaderboard_id):
        match = self.create(player1=player1,
