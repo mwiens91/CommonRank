@@ -30,8 +30,10 @@ class Leaderboard(models.Model):
                             blank=False)
     challenge_enabled = models.BooleanField(default=True)
 
-    deadline_time = models.IntegerField(blank=2100, null=True)
-    deadline_length = models.IntegerField(blank=14, null=True)
+    # Don't use these for now
+    #deadline_time = models.IntegerField(blank=2100, null=True)
+    #deadline_length = models.IntegerField(blank=14, null=True)
+
     elo_sensitivity = models.FloatField(default=0.5, null=False)
 
 
