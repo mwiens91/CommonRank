@@ -21,7 +21,6 @@ class LeaderboardSignUpForm(forms.ModelForm):
         fields = ('name', 'info', 'members','deadline_time','deadline_length')
 
 class CreateMatchSignUpForm(forms.ModelForm):
-
     leaderboard_id = 0
 
     def __init__(self, leaderboard_id):

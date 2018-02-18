@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
-from core.models import Leaderboard, Member, Profile, User
-from core.forms import LeaderboardSignUpForm, ProfileSignUpForm
+from core.models import Leaderboard, Member, Profile, User, Match
+from core.forms import LeaderboardSignUpForm, ProfileSignUpForm, CreateMatchSignUpForm
 
 @login_required
 def leaderboard_create(request):
@@ -74,12 +74,11 @@ def profile_signup(request):
 @login_required
 def create_match(request, leaderboard_id):
     if request.method == 'POST':
-        leaderboard = Leaderboard.objects.get(id=form.leaderboard.id)
-        form = CreateMatchSignUpForm(request.POST, leaderboard_id=leaderboard.id)
+        form = CreateMatchSignUpForm(request.POST, leaderboard_id=leaderboard_id)
         if form.is_valid():
             Match.objects.create(player1=request.user.profile, player2=form.player2, Leaderboard=leaderboard)
             form.save()
             return redirect(home)
     else:
-        form = CreateMatchSignUpForm(instance=Match())
+        form = CreateMatchSignUpForm(leaderboard_id)
     return render(request, 'match_create.html', {'form': form})
