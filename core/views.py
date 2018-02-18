@@ -158,13 +158,19 @@ def profile_home(request):
     members = request.user.profile.member_set.all()
     leaderboards = [member.leaderboard for member in members]
 
-    members_and_leaderboards = zip(members, leaderboards)
+    members_and_leaderboards = list(zip(members, leaderboards))
 
-    # Get all of a profile's notifications
-    notifications = request.user.profile.notification_set.all()
+    # Get all of a profile's notifications - for now this is just their
+    # upcoming matches
+    upcoming_matches = []
+
+    for member, leaderboard in members_and_leaderboards:
+        upcoming_matches += leaderboard.match_set.filter(
+                        Q(player1_id=member.id) | Q(player2_id=member.id)).filter(
+                        state=0)
 
     return render(request, 'home.html', {'members_and_leaderboards': members_and_leaderboards,
-                                         'notifications': notifications})
+                                         'upcoming_matches': upcoming_matches})
 
 def profile_signup(request):
     """Profile sign up page."""
