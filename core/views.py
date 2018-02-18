@@ -74,11 +74,20 @@ def profile_signup(request):
 @login_required
 def create_match(request, leaderboard_id):
     if request.method == 'POST':
+        leaderboard = Leaderboard.objects.get(id=leaderboard_id)
         form = CreateMatchSignUpForm(request.POST, leaderboard_id=leaderboard_id)
         if form.is_valid():
-            Match.objects.create(player1=request.user.profile, player2=form.player2, Leaderboard=leaderboard)
+            if form.fields['already_played'] == True:
+                if form.data.get('winner') == True:
+                    Match.objects.create(player1=request.user.profile, player2=form.player2, Leaderboard=leaderboard, winner=request.user.profile, loser=form.player2, state=1)
+                    return redirect(home)
+                Match.objects.create(player1=request.user.profile, player2=form.player2, Leaderboard=leaderboard,
+                                     loser=request.user.profile, winner=form.player2, state=1)
+                return redirect(home)
+            print("UHOH")
+            Match.objects.create(player1=Member.objects.filter(profileuser__user_id=request.user.id)[0], player2=form.cleaned_data['player2'], leaderboard=leaderboard, state=0)
             form.save()
-            return redirect(home)
+            return redirect(leaderboard_home, leaderboard_id=leaderboard_id)
     else:
-        form = CreateMatchSignUpForm(leaderboard_id)
+        form = CreateMatchSignUpForm(leaderboard_id=leaderboard_id)
     return render(request, 'match_create.html', {'form': form})

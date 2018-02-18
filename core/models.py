@@ -176,6 +176,7 @@ class Match(models.Model):
                                 null=True,
                                 blank=True,
                                 related_name='loser')
+    state = models.IntegerField(default=0)
     #deadline = models.DateTimeField(blank=datetime.date.today() + datetime.timedelta(days=leaderboard.deadline_length), null=False)
 
     def __str__(self):
