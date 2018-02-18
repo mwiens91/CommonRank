@@ -33,13 +33,15 @@ class SendInvite(FormView):
     def form_valid(self, form):
         email = form.cleaned_data["email"]
 
-        try:
-            invite = form.save(email)
-            invite.inviter = self.request.user
-            invite.save()
-            invite.send_invitation(self.request)
-        except Exception:
-            return self.form_invalid(form)
+
+        invite = form.save(email)
+        invite.inviter = self.request.user
+        invite.save()
+        print("????")
+        invite.send_invitation(self.request)
+        #except Exception:
+            #print("uhoh")
+            #return self.form_invalid(form)
         return self.render_to_response(
             self.get_context_data(
                 success_message=_('%(email)s has been invited') % {

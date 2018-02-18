@@ -13,7 +13,7 @@ from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
 from . import signals
-from .adapters import get_invitations_adapter
+from .adapters import get_invitations_adapter, BaseInvitationsAdapter
 from .app_settings import app_settings
 from .base_invitation import AbstractBaseInvitation
 
@@ -42,28 +42,30 @@ class Invitation(AbstractBaseInvitation):
         return expiration_date <= timezone.now()
 
     def send_invitation(self, request, **kwargs):
-        current_site = kwargs.pop('site', Site.objects.get_current())
+        print("where fore art thou branko")
+        #current_site = kwargs.pop('site', Site.objects.get_current())
+        print("goob")
         invite_url = reverse('invitations:accept-invite',
                              args=[self.key])
+        print("goob")
         invite_url = request.build_absolute_uri(invite_url)
+        print("goob")
         ctx = kwargs
         ctx.update({
             'invite_url': invite_url,
-            'site_name': current_site.name,
+            #'site_name': current_site.name,
             'email': self.email,
-            'key': self.key,
-            'inviter': self.inviter,
         })
-
         email_template = 'invitations/email/email_invite'
-
+        print(ctx)
         get_invitations_adapter().send_mail(
             email_template,
             self.email,
             ctx)
+        print("goob")
         self.sent = timezone.now()
         self.save()
-
+        print("goob")
         signals.invite_url_sent.send(
             sender=self.__class__,
             instance=self,
