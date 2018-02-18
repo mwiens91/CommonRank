@@ -18,7 +18,7 @@ The home page of a user.
 
 					{# List the tourneys #}
 					{% for leaderboard in leaderboards %}
-						<li>{{ leaderboard.name }}</li>
+					<li><a href='{% url 'leaderboard_home' leaderboard.id %}'>{{ leaderboard.name }}</a></li>
 					{% endfor %}
 
 				</ul>
@@ -27,8 +27,9 @@ The home page of a user.
 			{% endif %}
 
 			{# Other left-column options here #}
+			<h2>Also:</h2>
 			<ul>
-				<li>Create leaderboard</li>
+				<li><a href='{% url 'leaderboard_signup' %}'>Create leaderboard</a></li>
 				<li>Invites</li>
 			</ul>
 

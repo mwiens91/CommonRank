@@ -6,22 +6,27 @@ from core.models import Leaderboard, Member, Profile
 from core.forms import LeaderboardSignUpForm, ProfileSignUpForm
 
 @login_required
-def createleaderboard(request):
-
+def leaderboard_create(request):
+    """Leaderboard creation page."""
     if request.method == 'POST':
         newleaderboard = Leaderboard()
-        newtourney.host = request.user.profile
         form = LeaderboardSignUpForm(request.POST, request.FILES, instance=newleaderboard)
         if form.is_valid():
             thisleaderboard = form.save()
             Member.objects.create(leaderboard=thisleaderboard,
                                 profileuser=request.user.profile,
-                                privilege=5,)
+                                privilege=5, elo=69)
             thisleaderboard.save()
-            return redirect(home)
+            return redirect(leaderboard_home,
+                            leaderboard_id=thisleaderboard.id)
     else:
         form = LeaderboardSignUpForm(instance=Leaderboard())
-    return render(request, 'leaderboard-signup.html', {'form': form})
+    return render(request, 'leaderboard_signup.html', {'form': form})
+
+@login_required
+def leaderboard_home(request, leaderboard_id):
+    """Leaderboard home page."""
+    return render(request, 'leaderboard_home.html')
 
 @login_required
 def profile_home(request):
