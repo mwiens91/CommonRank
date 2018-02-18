@@ -3,6 +3,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.utils import timezone
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from core.models import Leaderboard, Member, Profile, User, Match
@@ -56,7 +57,7 @@ def leaderboard_home(request, leaderboard_id, member_id):
                    'N': N})
 
 @login_required
-def leaderboard_rankings(request, leaderboard_id):
+def leaderboard_rankings(request, leaderboard_id, member_id):
     """Leaderboard ranking page."""
     # Get the instance of this leaderboard
     thisleaderboard = Leaderboard.objects.get(id=leaderboard_id)
@@ -64,9 +65,13 @@ def leaderboard_rankings(request, leaderboard_id):
     # Get the members for the leaderboard, sorted by elo
     rankings = thisleaderboard.member_set.order_by('-elo')
 
+    # Get the member
+    this_member = Member.objects.get(id=member_id)
+
     return render(request,
                   'leaderboard_rankings.html',
                   {'leaderboard': thisleaderboard,
+                   'member': this_member,
                    'rankings': rankings})
 
 @login_required
@@ -82,7 +87,7 @@ def leaderboard_admin(request, leaderboard_id):
                   {'leaderboard': this_leaderboard,
                    'member_list': member_list})
 
-def match_history(request, leaderboard_id):
+def match_history(request, leaderboard_id, member_id):
     """Shows the match history of a leaderboard."""
     # Get the instance of this leaderboard
     thisleaderboard = Leaderboard.objects.get(id=leaderboard_id)
@@ -90,9 +95,13 @@ def match_history(request, leaderboard_id):
     # Get all of the matches of the leaderboard
     matches = thisleaderboard.match_set.all()
 
+    # Get the member
+    this_member = Member.objects.get(id=member_id)
+
     return render(request,
                   'match_history.html',
                   {'leaderboard': thisleaderboard,
+                   'member': this_member,
                    'matches': matches})
 
 def match_submit_results(request, leaderboard_id, member_id, match_id):
@@ -192,10 +201,8 @@ def profile_signup(request):
     return render(request, 'signup.html', {'form': form})
 
 @login_required
-def create_match(request, leaderboard_id):
-    player1 = Member.objects.filter(
-                                    profileuser__user_id=request.user.id).filter(
-                                    leaderboard_id=leaderboard_id)[0]
+def create_match(request, leaderboard_id, member_id):
+    player1 = Member.objects.get(id=member_id)
     leaderboard = Leaderboard.objects.get(id=leaderboard_id)
 
     if request.method == 'POST':
@@ -204,17 +211,19 @@ def create_match(request, leaderboard_id):
             player2 = form.cleaned_data['player2']
             if form.cleaned_data.get('outcome') != 'postpone':
                 if form.cleaned_data.get('outcome') == 'win':
-                    Match.objects.create(player1=player1, player2=player2, leaderboard=leaderboard, winner=player1, loser=player2, state=1)
+                    Match.objects.create(player1=player1, player2=player2, leaderboard=leaderboard, winner=player1, loser=player2, state=1, date_created=timezone.now())
                     return redirect(leaderboard_home, leaderboard_id=leaderboard_id, member_id=player1.id)
                 Match.objects.create(player1=player1, player2=player2, leaderboard=leaderboard,
-                                     loser=player1, winner=player2, state=1)
+                                     loser=player1, winner=player2, state=1, date_created=timezone.now())
                 return redirect(leaderboard_home, leaderboard_id=leaderboard_id, member_id=player1.id)
-            Match.objects.create(player1=player1, player2=player2, leaderboard=leaderboard, state=0)
+            Match.objects.create(player1=player1, player2=player2, leaderboard=leaderboard,
+                                state=0, date_created=timezone.now())
             return redirect(leaderboard_home, leaderboard_id=leaderboard_id, member_id=player1.id)
     else:
         form = CreateMatchSignUpForm(leaderboard_id=leaderboard_id, my_id=player1.id)
     return render(request, 'match_create.html', {'form': form,
-                                                 'leaderboard': leaderboard})
+                                                 'leaderboard': leaderboard,
+                                                 'member': player1})
 
 @login_required
 @require_POST

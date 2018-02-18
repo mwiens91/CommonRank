@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-import datetime
+from django.utils import timezone
 from core.update_elo import update_elo
 from timezone_field import TimeZoneField
 
@@ -30,8 +30,10 @@ class Leaderboard(models.Model):
                             blank=False)
     challenge_enabled = models.BooleanField(default=True)
 
-    deadline_time = models.IntegerField(blank=2100, null=True)
-    deadline_length = models.IntegerField(blank=14, null=True)
+    # Don't use these for now
+    #deadline_time = models.IntegerField(blank=2100, null=True)
+    #deadline_length = models.IntegerField(blank=14, null=True)
+
     elo_sensitivity = models.FloatField(default=0.5, null=False)
 
 
@@ -174,6 +176,7 @@ class Match(models.Model):
                                 blank=True,
                                 related_name='loser')
     state = models.IntegerField(default=0)
+    date_created = models.DateTimeField(default=timezone.now, blank=True)
     #deadline = models.DateTimeField(blank=datetime.date.today() + datetime.timedelta(days=leaderboard.deadline_length), null=False)
 
     def __str__(self):

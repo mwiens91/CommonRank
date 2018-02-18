@@ -21,7 +21,7 @@ class LeaderboardSignUpForm(forms.ModelForm):
 
     class Meta:
         model = Leaderboard
-        fields = ('name', 'info', 'members','deadline_time','deadline_length')
+        fields = ('name', 'info', 'members')
 
 class CreateMatchSignUpForm(forms.ModelForm):
 
