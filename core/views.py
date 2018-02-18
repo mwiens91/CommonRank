@@ -40,6 +40,19 @@ def leaderboard_home(request, leaderboard_id):
                    'topmembers': toplist,
                    'N': N})
 
+def match_history(request, leaderboard_id):
+    """Shows the match history of a leaderboard."""
+    # Get the instance of this leaderboard
+    thisleaderboard = Leaderboard.objects.get(id=leaderboard_id)
+
+    # Get all of the matches of the leaderboard
+    matches = thisleaderboard.match_set.all()
+
+    return render(request,
+                  'match_history.html',
+                  {'leaderboard': thisleaderboard,
+                   'matches': matches})
+
 @login_required
 def profile_home(request):
     """Profile home page."""
