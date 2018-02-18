@@ -4,7 +4,7 @@ document.body.addEventListener('submit', function (event) {
   event.preventDefault()
 
   // POST manually with the Fetch API
-  var form = event.originalTarget
+  var form = event.target
 
   fetch(form.action, {
     body: new FormData(form),
