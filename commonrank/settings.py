@@ -141,3 +141,6 @@ EMAIL_HOST_USER = "commonrank.invites@gmail.com"
 EMAIL_HOST_PASSWORD = "5YonLrEf@66P"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+# Need this setting to make django.contrib.sites play nicely
+SITE_ID=1
