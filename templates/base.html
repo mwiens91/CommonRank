@@ -35,7 +35,23 @@ main navigation links.
 
 					{# Show logout and settings if user is logged in #}
 					{% if user.is_authenticated %}
-						<div><a href="{% url 'logout' %}">logout</a></div>
+
+						{% comment %}
+							Show the return url to the homepage if not
+							on leaderboard, otherwise go to the home
+							page of the leaderboard
+						{% endcomment %}
+						<div><a href="
+
+						{% if leaderboard and member %}
+							{% url 'leaderboard_home' leaderboard.id member.id %}
+						{% else %}
+							{% url 'home' %}
+						{% endif %}
+
+						">↻&nbsp;return</a></div>
+
+						<div><a href="{% url 'logout' %}">↤&nbsp;logout</a></div>
 					{% endif %}
 
 				</div>
