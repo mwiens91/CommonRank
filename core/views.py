@@ -145,7 +145,8 @@ def match_submit_results(request, leaderboard_id, member_id, match_id, opponent_
     if this_match.player1.id == member_id:
         opponent = this_match.player2
     else:
-        opponent = this_member
+        #opponent = this_member
+        opponent = this_match.player1
 
     return render(request,
                   'match_submit_results.html',
