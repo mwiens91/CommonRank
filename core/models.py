@@ -68,7 +68,7 @@ class Leaderboard(models.Model):
 
     def remove_privilege(self, user):
         subject = Member.objects.get(profileuser=user)
-        subject.decrese_privilege()
+        subject.remove_privilege()
 
     def approve_member(self, user):
         subject = Member.objects.get(profileuser=user)
