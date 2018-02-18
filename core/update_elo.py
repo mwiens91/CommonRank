@@ -21,13 +21,13 @@ def update_elo(winner, loser, elo_sensitivity):
     loser_k_factor = k_factor
     expected_winner = 1/(1+math.pow(10,((loser.elo-winner.elo)/400)))
     expected_loser = 1 - expected_winner
-    if(winner_games<20 && winner_games>=10):
+    if(winner_games<20 and winner_games>=10):
         winner_k_factor = winner_k_factor*2
-    elif(winner_games<10 && winner_games>=0):
+    elif(winner_games<10 and winner_games>=0):
         winner_k_factor = winner_k_factor*4
-    if(loser_games<20 && loser_games>=10):
+    if(loser_games<20 and loser_games>=10):
         loser_k_factor = loser_k_factor*2
-    elif(loser_games<10 && loser_games>=0):
+    elif(loser_games<10 and loser_games>=0):
         loser_k_factor = loser_k_factor*4
     
     loser.elo = loser.elo + loser_k_factor*(0-expected_loser)
