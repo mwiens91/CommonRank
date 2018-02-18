@@ -11,7 +11,7 @@ class Profile(models.Model):
                                 null=True)
     bio = models.TextField(max_length=200,
                             null=True,
-                            blank=False,)
+                            blank=False)
 
     def __str__(self):
         return '%s' % self.user.username
@@ -20,10 +20,10 @@ class Leaderboard(models.Model):
 
     info = models.TextField(max_length=200,
                             null=True,
-                            blank=False,)
+                            blank=False)
     name = models.CharField(max_length=200,
                             null=True,
-                            blank=False,)
+                            blank=False)
     challenge_enabled = models.BooleanField(default=True)
 
     deadline_time = models.IntegerField(blank=2100, null=True)
@@ -92,11 +92,11 @@ class Member(models.Model):
     leaderboard = models.ForeignKey(Leaderboard,
                                     on_delete=models.CASCADE,
                                     null=True,
-                                    blank=True,)
+                                    blank=True)
     profileuser = models.ForeignKey(Profile,
                                     on_delete=models.CASCADE,
                                     null=True,
-                                    blank=True,)
+                                    blank=True)
     elo = models.FloatField()
 
     privilege = models.IntegerField(default=1, null=False)
@@ -128,13 +128,13 @@ class Member(models.Model):
 class Challenge(models.Model):
 
     challenger = models.ManyToManyField(Member,
-                                        related_name='challenger',)
+                                        related_name='challenger')
     challengee = models.ManyToManyField(Member,
-                                        related_name='challengee',)
+                                        related_name='challengee')
     leaderboard = models.ForeignKey(Leaderboard,
                                     on_delete=models.CASCADE,
                                     null=True,
-                                    blank=True,)
+                                    blank=True)
     punishment = models.BooleanField()
     expiry = models.TimeField()
 
@@ -144,7 +144,7 @@ class Notification(models.Model):
     profileuser = models.ForeignKey(Profile,
                                     on_delete=models.CASCADE,
                                     null=True,
-                                    blank=True,)
+                                    blank=True)
 
 
 class Match(models.Model):
@@ -153,12 +153,12 @@ class Match(models.Model):
                                 on_delete=models.CASCADE,
                                 null=True,
                                 blank=True,
-                                related_name='player1',)
+                                related_name='player1')
     player2 = models.ForeignKey(Member,
                                 on_delete=models.CASCADE,
                                 null=True,
                                 blank=True,
-                                related_name='player2',)
+                                related_name='player2')
     leaderboard = models.ForeignKey(Leaderboard,
                                     on_delete=models.CASCADE,
                                     null=True,
@@ -167,12 +167,12 @@ class Match(models.Model):
                                 on_delete=models.CASCADE,
                                 null=True,
                                 blank=True,
-                                related_name='winner',)
+                                related_name='winner')
     loser = models.ForeignKey(Member,
                                 on_delete=models.CASCADE,
                                 null=True,
                                 blank=True,
-                                related_name='loser',)
+                                related_name='loser')
     #deadline = models.DateTimeField(blank=datetime.date.today() + datetime.timedelta(days=leaderboard.deadline_length), null=False)
 
     def __str__(self):
@@ -190,10 +190,10 @@ class Report(models.Model):
     match = models.ForeignKey(Match,
                                 on_delete=models.CASCADE,
                                 null=True,
-                                blank=True,)
+                                blank=True)
     details = models.TextField(max_length=200,
                                 null=True,
-                                blank=False,)
+                                blank=False)
 
     def __str__(self):
         return '%s || Match %s || Report %s ' % (self.leaderboard.name,

@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import User, Profile, Leaderboard, Match
+from .models import User, Profile, Leaderboard, Match, Member
 
 class ProfileSignUpForm(UserCreationForm):
 
@@ -28,7 +28,10 @@ class CreateMatchSignUpForm(forms.ModelForm):
     def __init__(self, leaderboard_id):
         self.leaderboard_id = leaderboard_id
 
-    members = forms.ModelChoiceField(queryset=Leaderboard.objects.get(id=leaderboard_id).member_set)
+    #members = forms.ModelChoiceField(queryset=Leaderboard.objects.get(id=leaderboard_id).member_set)
+    already_played = forms.BooleanField()
+    winner = forms.BooleanField()
+
     class Meta:
         model = Match
-        fields = ('opponent')
+        fields = ('player2', 'already_played', 'winner')
