@@ -19,7 +19,7 @@ def leaderboard_create(request):
                                 profileuser=request.user.profile,
                                 privilege=5, elo=69)
             thisleaderboard.save()
-            thisleaderboard.member_set[0].id
+            member_id = thisleaderboard.member_set.all()[0].id
             return redirect(leaderboard_home,
                             leaderboard_id=thisleaderboard.id,
                             member_id=member_id)

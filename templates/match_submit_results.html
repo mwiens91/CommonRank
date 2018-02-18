@@ -19,7 +19,7 @@ The upcoming  match result submission form.
 				<form method="post" action="{% url 'match_submit_results' leaderboard.id member.id match.id %}">
 					{% csrf_token %}
 					<input type=hidden name="result" value="win">
-					<button type="submit">
+					<button style="margin: 0.24em" type="submit">
 						yes
 					</button>
 				</form>
@@ -29,7 +29,7 @@ The upcoming  match result submission form.
 				<form method="post" action="{% url 'match_submit_results' leaderboard.id member.id match.id %}">
 					{% csrf_token %}
 					<input type=hidden name="result" value="loss">
-					<button type="submit">
+					<button style="margin: 0.24em" type="submit">
 						no
 					</button>
 				</form>

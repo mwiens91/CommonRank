@@ -32,13 +32,16 @@ class CreateMatchSignUpForm(forms.ModelForm):
         super(CreateMatchSignUpForm, self).__init__(*args, **kwargs)
         self.fields['player2'].queryset = member_queryset
 
-    player2 = forms.ModelChoiceField(queryset=Member.objects.none())
-    already_played = forms.BooleanField(required=False)
-    did_win = forms.BooleanField(required=False)
+    player2 = forms.ModelChoiceField(queryset=Member.objects.none(),
+                                     label="Opponent")
+    already_played = forms.BooleanField(required=False,
+                                        label="If not victory, schedule match for later?")
+    did_win = forms.BooleanField(required=False,
+                                 label="Victory?")
 
     class Meta:
         model = Match
-        fields = ('player2', 'already_played', 'did_win')
+        fields = ('player2', 'did_win', 'already_played')
 
 class VerifyMatchSignUpForm(forms.ModelForm):
 
