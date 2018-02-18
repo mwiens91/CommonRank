@@ -2,12 +2,12 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
-from core.models import Leaderboard, Profile
+from core.models import Leaderboard, Member, Profile
 from core.forms import LeaderboardSignUpForm, ProfileSignUpForm
 
 @login_required
-def createleaderboard(request):
-
+def leaderboard_create(request):
+    """Leaderboard creation page."""
     if request.method == 'POST':
         newtourney.host = request.user.profile
         form = LeaderboardSignUpForm(request.POST)
@@ -15,18 +15,25 @@ def createleaderboard(request):
             thisleaderboard = form.save()
             Member.objects.create(leaderboard=thisleaderboard,
                                 profileuser=request.user.profile,
-                                privilege=5,)
+                                privilege=5, elo=69)
             thisleaderboard.save()
-            return redirect(home)
+            return redirect(leaderboard_home,
+                            leaderboard_id=thisleaderboard.id)
     else:
         form = LeaderboardSignUpForm(instance=Leaderboard())
-    return render(request, 'leaderboard-signup.html', {'form': form})
+    return render(request, 'leaderboard_signup.html', {'form': form})
+
+@login_required
+def leaderboard_home(request, leaderboard_id):
+    """Leaderboard home page."""
+    return render(request, 'leaderboard_home.html')
 
 @login_required
 def profile_home(request):
     """Profile home page."""
     # Get all of a profile's leaderboards
-    leaderboards = request.user.profile.member_set.all().values('leaderboard')
+    members = request.user.profile.member_set.all()
+    leaderboards = [member.leaderboard for member in members]
 
     # Get all of a profile's notifications
     notifications = request.user.profile.notification_set.all()
