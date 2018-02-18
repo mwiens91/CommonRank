@@ -29,7 +29,14 @@ def update_elo(winner, loser, elo_sensitivity):
         loser_k_factor = loser_k_factor*2
     elif(loser_games<10 and loser_games>=0):
         loser_k_factor = loser_k_factor*4
-    
+
     loser.elo = loser.elo + loser_k_factor*(0-expected_loser)
     winner.elo = winner.elo + winner_k_factor*(1-expected_winner)
 
+    # Increment wins and losses
+    loser.losses += 1
+    winner.wins += 1
+
+    # Update the loser and winner instances
+    loser.save()
+    winner.save()
