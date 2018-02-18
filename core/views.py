@@ -117,3 +117,18 @@ def create_match(request, leaderboard_id):
     else:
         form = CreateMatchSignUpForm(leaderboard_id=leaderboard_id, my_id=member_id)
     return render(request, 'match_create.html', {'form': form})
+
+@login_required
+def verify_match(request, match_id)
+    """ Verify match results by editing the match """
+    match = Match.objects.get(id=match_id)
+    if request.method == 'POST':
+        form = VerifyMatchSignUpForm(request.POST, instance=match)
+        2 = match.state
+        if form.is_valid():
+            form.save()
+            return render(request, 'verify_match.html', {'match':match, 'match_id':match_id, 'form':form})
+
+    else:
+        form = VerifyMatchSignUpForm(None, instance=match)
+    return render(request, 'verify_match.html', {'match':match, 'match_id':match_id, 'form':form})
