@@ -18,26 +18,30 @@ def leaderboard_create(request):
                                 profileuser=request.user.profile,
                                 privilege=5, elo=69)
             thisleaderboard.save()
+            thisleaderboard.member_set[0].id
             return redirect(leaderboard_home,
-                            leaderboard_id=thisleaderboard.id)
+                            leaderboard_id=thisleaderboard.id,
+                            member_id=member_id)
     else:
         form = LeaderboardSignUpForm(instance=Leaderboard())
     return render(request, 'leaderboard_signup.html', {'form': form})
 
 @login_required
-def leaderboard_home(request, leaderboard_id):
+def leaderboard_home(request, leaderboard_id, member_id):
     """Leaderboard home page."""
     # Get the instance of this leaderboard
     thisleaderboard = Leaderboard.objects.get(id=leaderboard_id)
 
     # Get the member
-    this_member = Member.objects.filter(profileuser__user_id=request.user.id)[0]
+    this_member = Member.objects.get(id=member_id)
 
     # Get the top-N for the leaderboard
     toplist = thisleaderboard.member_set.order_by('-elo')
     N = 10 if len(toplist) > 10 else len(toplist)
 
     toplist = toplist[:N]
+
+    # Get the upcoming matches
 
     return render(request,
                   'leaderboard_home.html',
@@ -95,9 +99,13 @@ def match_verify_list(request, leaderboard_id, member_id):
     # verify
     matches = thisleaderboard.match_set.filter(loser_id=member_id).filter(state=1)
 
+    # Get the member
+    this_member = Member.objects.get(id=member_id)
+
     return render(request,
                   'match_verify.html',
                   {'leaderboard': thisleaderboard,
+                   'member': this_member,
                    'matches': matches})
 
 @login_required
@@ -107,10 +115,12 @@ def profile_home(request):
     members = request.user.profile.member_set.all()
     leaderboards = [member.leaderboard for member in members]
 
+    members_and_leaderboards = zip(members, leaderboards)
+
     # Get all of a profile's notifications
     notifications = request.user.profile.notification_set.all()
 
-    return render(request, 'home.html', {'leaderboards': leaderboards,
+    return render(request, 'home.html', {'members_and_leaderboards': members_and_leaderboards,
                                          'notifications': notifications})
 
 def profile_signup(request):
@@ -144,19 +154,19 @@ def create_match(request, leaderboard_id):
             if form.cleaned_data['already_played'] == True:
                 if form.cleaned_data.get('winner') == True:
                     Match.objects.create(player1=player1, player2=player2, leaderboard=leaderboard, winner=player1, loser=player2, state=1)
-                    return redirect(leaderboard_home, leaderboard_id=leaderboard_id)
+                    return redirect(leaderboard_home, leaderboard_id=leaderboard_id, member_id=member_id)
                 Match.objects.create(player1=player1, player2=player2, leaderboard=leaderboard,
                                      loser=player1, winner=player2, state=1)
-                return redirect(leaderboard_home, leaderboard_id=leaderboard_id)
+                return redirect(leaderboard_home, leaderboard_id=leaderboard_id, member_id=member_id)
             Match.objects.create(player1=player1, player2=player2, leaderboard=leaderboard, state=0)
-            return redirect(leaderboard_home, leaderboard_id=leaderboard_id)
+            return redirect(leaderboard_home, leaderboard_id=leaderboard_id, member_id=member_id)
     else:
         form = CreateMatchSignUpForm(leaderboard_id=leaderboard_id, my_id=member_id)
     return render(request, 'match_create.html', {'form': form})
 
 @login_required
 @require_POST
-def verify_match(request, leaderboard_id, match_id):
+def verify_match(request, leaderboard_id, member_id, match_id):
     """Verify match results."""
     match = Match.objects.get(id=match_id)
     match.state = 2
@@ -169,7 +179,7 @@ def verify_match(request, leaderboard_id, match_id):
 
 @login_required
 @require_POST
-def delete_match(request, leaderboard_id, match_id):
+def delete_match(request, leaderboard_id, member_id, match_id):
     """Delete a match."""
     Match.objects.get(id=match_id).delete()
 

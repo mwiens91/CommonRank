@@ -20,14 +20,14 @@ This page shows the matches that need verification by a player.
 					<div>
 						Did you lose a match to {{ match.winner.profileuser.user.username }}?
 					</div>
-					<form action="{% url 'match_verify' leaderboard.id match.id %}" method="post">
+					<form action="{% url 'match_verify' leaderboard.id member.id match.id %}" method="post">
 						{% csrf_token %}
 						<button type="submit">
 							yes
 						</button>
 					</form>
 
-					<form action="{% url 'match_remove' leaderboard.id match.id %}" method="post">
+					<form action="{% url 'match_remove' leaderboard.id member.id match.id %}" method="post">
 						{% csrf_token %}
 						<button type="submit">
 							no
