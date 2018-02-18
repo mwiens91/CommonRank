@@ -153,10 +153,13 @@ tbody th{
 
 /* Upcoming matches table */
 .upcomingmatchestable tbody th:nth-child(1){
-	width: 20em;
+	width: 15em;
 }
 .upcomingmatchestable tbody th:nth-child(2){
-	width: 20em;
+	width: 15em;
+}
+.upcomingmatchestable tbody th:nth-child(3){
+	width: 6em;
 }
 
 /* The grid showing the matches to verify */

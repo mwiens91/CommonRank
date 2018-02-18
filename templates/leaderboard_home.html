@@ -44,13 +44,33 @@ The home page of a leaderboard.
 		</tbody>
 	</table>
 
-	<h2>Upcoming matches</h2>
+	<h2>{{ user.first_name }}'s upcoming matches</h2>
 	{% if upcoming_matches %}
+		<table class='upcomingmatchestable'>
+			<tbody>
+				<tr>
+					<th>Player 1</th>
+					<th>Player 2</th>
+					<th></th>
+				</tr>
 
-		{# List the upcoming matches #}
-		{% for match in upcoming_matches %}
-			<div>{{ match }}</div>
-		{% endfor %}
+				{# List the upcoming matches #}
+				{% for match in upcoming_matches %}
+					<tr>
+						<td>{{ match.player1.profileuser.user.username }}</td>
+						<td>{{ match.player2.profileuser.user.username }}</td>
+						<td>
+							<form action="" method="post">
+								{% csrf_token %}
+								<button type="submit">
+									submit results
+								</button>
+							</form>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
 
 	{% else %}
 		<div>No upcoming matches :(</div>
