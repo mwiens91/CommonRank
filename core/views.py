@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
-from core.models import Leaderboard, Profile
+from core.models import Leaderboard, Member, Profile
 from core.forms import LeaderboardSignUpForm, ProfileSignUpForm
 
 @login_required
@@ -27,7 +27,8 @@ def createleaderboard(request):
 def profile_home(request):
     """Profile home page."""
     # Get all of a profile's leaderboards
-    leaderboards = request.user.profile.member_set.all().values('leaderboard')
+    members = request.user.profile.member_set.all()
+    leaderboards = [member.leaderboard for member in members]
 
     # Get all of a profile's notifications
     notifications = request.user.profile.notification_set.all()
