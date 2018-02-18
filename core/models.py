@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+import datetime
 
 class Profile(models.Model):
 
@@ -34,7 +35,7 @@ class Leaderboard(models.Model):
         return '%s' % self.name
 
     def invite_member(self, profile):
-        Member.objects.create(leaderboard=self, profileuser=profile)
+        Member.objects.create(leaderboard=self, profileuser=profile, privilege=1)
 
     def delete_member(self, profile):
         Member.objects.get(profileuser=profile).delete()
@@ -68,6 +69,25 @@ class Leaderboard(models.Model):
         subject = Member.objects.get(profileuser=user)
         subject.decrese_privilege()
 
+    def approve_member(self, user):
+        subject = Member.objects.get(profileuser=user)
+        if subject.privilege == -1:
+            subject.increase_privilege()
+
+    def set_bio(self, message):
+        if len(message > 200):
+            return False
+        else:
+            self.info = message
+            return True
+
+    def delete_match(self, match):
+        Match.objects.get(id=match.id).delete()
+
+    def report_match(self, match, reason):
+        Match.objects.get(id=match.id).report(reason)
+        
+
 class Member(models.Model):
 
     leaderboard = models.ForeignKey(Leaderboard,
@@ -79,7 +99,9 @@ class Member(models.Model):
                                     null=True,
                                     blank=True,)
     elo = models.FloatField()
+
     privilege = models.IntegerField(default=1, null=False)
+
     def increase_privilege(self):
         if self.privilege <= 4:
             self.privilege += 1
@@ -87,6 +109,19 @@ class Member(models.Model):
     def remove_privilege(self):
         if self.privilege >= 0:
             self.privilege -= 1
+
+    #only winners can submit matches
+    def submit_match(self,loser,leaderboard_id):
+        match = create_match(self,loser,leaderboard_id)
+        match.winner = self
+        match.loser = loser
+        match.state = 1 #unverified
+
+    #only losers can verify matches
+    def verify_match(self,match_id)
+        match = Match.objects.get(pk=match_id)
+        match.state = 2 #verified
+        match.winner, match.loser = update_elo(match.winner,match.loser,1)
 
 class Challenge(models.Model):
 
@@ -101,6 +136,7 @@ class Challenge(models.Model):
     punishment = models.BooleanField()
     expiry = models.TimeField()
 
+
 class Notification(models.Model):
 
     profileuser = models.ForeignKey(Profile,
@@ -108,20 +144,26 @@ class Notification(models.Model):
                                     null=True,
                                     blank=True,)
 
+
 class Match(models.Model):
 
-    player1 = models.ManyToManyField(Member,
-                                        related_name='player1',)
-    player2 = models.ManyToManyField(Member,
-                                        related_name='player2',)
+    player1 = models.ForeignKey(Member, related_name='player1',)
+    player2 = models.ForeignKey(Member, related_name='player2',)
     leaderboard = models.ForeignKey(Leaderboard,
                                     on_delete=models.CASCADE,
                                     null=True,
                                     blank=True,)
-    winner = models.ManyToManyField(Member,
-                                        related_name='winner',)
-    loser = models.ManyToManyField(Member,
-                                        related_name='loser',)
+    #create_match is called when a challenge is created or when a regular match is submitted. Creates match object and fills in necessary information, then calls add_match to add the match to the leaderboard
+    def create_match(player1,player2,leaderboard_id):
+       match = self.create(player1=player1,
+               player2=player2,
+               leaderboard=Leaderboard.objects.get(pk=leaderboard_id),
+               state=0) #state 0 means challenged but not accepted yet)
+
+    winner = models.ForeignKey(Member, related_name='winner',)
+    loser = models.ForeignKey(Member, related_name='loser',)
+    deadline = models.DateTimeField(blank=datetime.date.today().timedelta(days=leaderboard.deadline_length), null=False)
+
 
 class Report(models.Model):
 
