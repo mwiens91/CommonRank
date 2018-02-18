@@ -27,7 +27,7 @@ class CreateMatchSignUpForm(forms.ModelForm):
         my_id = kwargs.pop('my_id')
         member_queryset = Leaderboard.objects.get(id=leaderboard_id).member_set.exclude(id=my_id)
         super(CreateMatchSignUpForm, self).__init__(*args, **kwargs)
-        self.fields['player2'].queryest = member_queryset
+        self.fields['player2'].queryset = member_queryset
 
     player2 = forms.ModelChoiceField(queryset=Member.objects.none())
     already_played = forms.BooleanField()
