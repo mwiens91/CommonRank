@@ -101,6 +101,9 @@ class Member(models.Model):
 
     privilege = models.IntegerField(default=1, null=False)
 
+    def __str__(self):
+        return '%s' % self.profile.user.username
+
     def increase_privilege(self):
         if self.privilege <= 4:
             self.privilege += 1
@@ -171,6 +174,10 @@ class Match(models.Model):
                                 blank=True,
                                 related_name='loser',)
     #deadline = models.DateTimeField(blank=datetime.date.today() + datetime.timedelta(days=leaderboard.deadline_length), null=False)
+
+    def __str__(self):
+        return '%s || Match %s ' % self.leaderboard.name, self.id)
+
     #create_match is called when a challenge is created or when a regular match is submitted. Creates match object and fills in necessary information, then calls add_match to add the match to the leaderboard
     def create_match(player1,player2,leaderboard_id):
        match = self.create(player1=player1,
@@ -187,3 +194,8 @@ class Report(models.Model):
     details = models.TextField(max_length=200,
                                 null=True,
                                 blank=False,)
+
+    def __str__(self):
+        return '%s || Match %s || Report %s ' % self.leaderboard.name,
+                                             self.match.id,
+                                             self.id)
