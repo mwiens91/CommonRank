@@ -106,6 +106,20 @@ def match_submit_results(request, leaderboard_id, member_id, match_id):
     # Get the match
     this_match = Match.objects.get(id=match_id)
 
+    # Update the match if posting
+    if request.method == 'POST':
+        if request.POST['result'] == 'win':
+            # Do some stuff
+            pass
+        else:
+            # Do some other stuff
+            pass
+
+        # Redirect to leaderboard homepage
+        return redirect(leaderboard_home,
+                        leaderboard_id=thisleaderboard.id,
+                        member_id=member_id)
+
     # Get the opponent's username
     if this_match.player1.id == member_id:
         opponent_name = this_match.player2.profileuser.user.username

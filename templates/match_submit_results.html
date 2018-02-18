@@ -14,17 +14,27 @@ The upcoming  match result submission form.
 
 		<div>Did you bless up <strong>{{ opponent_name }}</strong>?</div>
 
-		<form method="post" action="">
-			<button style="margin-top: 1em" type="submit">
-				yeah dawg
-			</button>
-		</form>
+		<div style="display: flex; justify-content: center; padding-top: 1em">
+			<div>
+				<form method="post" action="{% url 'match_submit_results' leaderboard.id member.id match.id %}">
+					{% csrf_token %}
+					<input type=hidden name="result" value="win">
+					<button type="submit">
+						yeah dawg
+					</button>
+				</form>
+			</div>
 
-		<form method="post" action="">
-			<button style="margin-top: .5em" type="submit">
-				no dawg
-			</button>
-		</form>
+			<div>
+				<form method="post" action="{% url 'match_submit_results' leaderboard.id member.id match.id %}">
+					{% csrf_token %}
+					<input type=hidden name="result" value="loss">
+					<button type="submit">
+						no dawg
+					</button>
+				</form>
+			</div>
+		</div>
 	</div>
 
 
