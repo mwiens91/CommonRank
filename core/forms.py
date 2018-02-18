@@ -23,11 +23,13 @@ class LeaderboardSignUpForm(forms.ModelForm):
 class CreateMatchSignUpForm(forms.ModelForm):
     leaderboard_id = 1
 
-    def __init__(self, *args, leaderboard_id,  **kwargs):
-        self.leaderboard_id = leaderboard_id
+    def __init__(self, *args, **kwargs):
+        leaderboard_id = kwargs.pop('leaderboard_id')
+        member_queryset = Leaderboard.objects.get(id=leaderboard_id).member_set
         super(CreateMatchSignUpForm, self).__init__(*args, **kwargs)
+        self.fields['player2'].queryset = member_queryset
 
-    player2 = forms.ModelChoiceField(queryset=Leaderboard.objects.get(id=6).member_set)
+    player2 = forms.ModelChoiceField(queryset=Member.objects.none())
     already_played = forms.BooleanField()
     did_win = forms.BooleanField()
     #player2 = forms.IntegerField()
