@@ -13,8 +13,9 @@ from core.update_elo import update_elo
 @login_required
 def leaderboard_create(request):
     """Leaderboard creation page."""
+    thisrequest = request.user.profile
     if request.method == 'POST':
-        form = LeaderboardSignUpForm(request.POST)
+        form = LeaderboardSignUpForm(request.POST,request=thisrequest)
         if form.is_valid():
             thisleaderboard = form.save()
 
@@ -24,13 +25,16 @@ def leaderboard_create(request):
                                     profileuser=profile,
                                     privilege=0, elo=1500)
 
+            Member.objects.create(leaderboard=thisleaderboard,
+                                profileuser=thisrequest,
+                                privilege=0, elo=1500)
             thisleaderboard.save()
             member_id = thisleaderboard.member_set.all()[0].id
             return redirect(leaderboard_home,
                             leaderboard_id=thisleaderboard.id,
                             member_id=member_id)
     else:
-        form = LeaderboardSignUpForm(instance=Leaderboard())
+        form = LeaderboardSignUpForm(request=thisrequest)
     return render(request, 'leaderboard_signup.html', {'form': form})
 
 @login_required
