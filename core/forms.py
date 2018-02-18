@@ -29,7 +29,7 @@ class CreateMatchSignUpForm(forms.ModelForm):
         super(CreateMatchSignUpForm, self).__init__(*args, **kwargs)
         self.fields['player2'].queryest = member_queryset
 
-    player2 = forms.ModelChoiceField(queryset=Member.object.none())
+    player2 = forms.ModelChoiceField(queryset=Member.objects.none())
     already_played = forms.BooleanField()
     did_win = forms.BooleanField()
 
