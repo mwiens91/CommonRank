@@ -17,7 +17,15 @@ class ProfileSignUpForm(UserCreationForm):
 
 class LeaderboardSignUpForm(forms.ModelForm):
 
-    members = forms.ModelMultipleChoiceField(queryset=Profile.objects.all())
+
+    def __init__(self, *args, **kwargs):
+        request = kwargs.pop('request')
+        self.user=request.user
+        member_queryset = Profile.objects.exclude(id=self.user.profile.id)
+        super(LeaderboardSignUpForm, self).__init__(*args, **kwargs)
+        self.fields['members'].queryset = member_queryset
+
+    members = forms.ModelMultipleChoiceField(queryset=Profile.objects.none())
 
     class Meta:
         model = Leaderboard
