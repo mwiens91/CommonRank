@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
-from core.models import Leaderboard, Member, Profile
+from core.models import Leaderboard, Member, Profile, User
 from core.forms import LeaderboardSignUpForm, ProfileSignUpForm
 
 @login_required
