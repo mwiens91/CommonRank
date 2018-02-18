@@ -13,7 +13,7 @@ The home page of a leaderboard.
 	<h2>Useful options</h2>
 	<ul>
 		<li><a href='{% url 'match_create' leaderboard.id %}'>Submit match</a></li>
-		<li>Verify matches</li>
+		<li><a href='{% url 'match_verify_list' leaderboard.id member.id %}'>Verify matches</li>
 		<li><a href='{% url 'match_history' leaderboard.id %}'>Match history</a></li>
 		<li>Rankings</li>
 		<li>Invite members</li>
