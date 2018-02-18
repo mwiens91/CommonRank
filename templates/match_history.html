@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% comment %}
+This page shows the match history of a leaderboard.
+{% endcomment %}
+
+{% block title %}{{ leaderboard.name }} | match history{% endblock %}
+
+{% block toppagetitle %}{{ leaderboard.name }}{% endblock %}
+
+{% block content %}
+
+	{# List all the matches #}
+	<ul>
+		{% for match in matches %}
+			<li>{{ match }}</li>
+		{% endfor %}
+	</ul>
+
+{% endblock %}
