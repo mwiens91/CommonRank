@@ -38,14 +38,17 @@ The home page of a user.
 		<div class="homepage-column" style="margin-left: 0.69em">
 			
 			{# Display notifications #}
-			<h2>Notifications</h2>
+			<h2>Upcoming matches</h2>
 
-			{% if notifications %}
+			{% if upcoming_matches %}
 				<ul>
 
 					{# List the notifications #}
-					{% for notification in notifications %}
-						<li>{{ notification }}</li>
+					{% for match in upcoming_matches %}
+					<li style="padding-top: 5px">
+						<div><span style="font-weight: bold">{{ match.player1 }}</span> vs <span style="font-weight: bold">{{ match.player2 }}</span></div>
+						<div>on <span style="color: red">{{ match.leaderboard.name }}</span></div>
+					</li>
 					{% endfor %}
 
 				</ul>
