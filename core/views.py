@@ -26,7 +26,11 @@ def leaderboard_create(request):
 @login_required
 def leaderboard_home(request, leaderboard_id):
     """Leaderboard home page."""
-    return render(request, 'leaderboard_home.html')
+    thisleaderboard = Leaderboard.objects.get(id=leaderboard_id)
+
+    return render(request,
+                  'leaderboard_home.html',
+                  {'leaderboard': thisleaderboard})
 
 @login_required
 def profile_home(request):
