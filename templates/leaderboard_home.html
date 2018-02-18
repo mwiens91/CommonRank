@@ -10,6 +10,9 @@ The home page of a leaderboard.
 
 {% block content %}
 
+	<h2>Info</h2>
+	<div>{{ leaderboard.info }}</div>
+
 	<h2>Useful options</h2>
 	<ul>
 		<li><a href='{% url 'match_create' leaderboard.id member.id %}'>Submit match</a></li>
