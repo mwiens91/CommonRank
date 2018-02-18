@@ -48,7 +48,7 @@ class Invitation(AbstractBaseInvitation):
         invite_url = reverse('invitations:accept-invite',
                              args=[self.key])
         print("goob")
-        invite_url = request.build_absolute_uri(invite_url)
+        invite_url = request.build_absolute_uri(invite_url, )
         print("goob")
         ctx = kwargs
         ctx.update({
