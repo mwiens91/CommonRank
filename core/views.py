@@ -32,11 +32,10 @@ def leaderboard_home(request, leaderboard_id):
     this_member = Member.objects.filter(profileuser__user_id=request.user.id)[0]
 
     # Get the top-N for the leaderboard
-    N = 10
     toplist = thisleaderboard.member_set.order_by('-elo')
+    N = 10 if len(toplist) > 10 else len(toplist)
 
-    if len(toplist) > 10:
-        toplist = toplist[:10]
+    toplist = toplist[:N]
 
     return render(request,
                   'leaderboard_home.html',
