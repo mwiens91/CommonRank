@@ -40,6 +40,19 @@ def leaderboard_home(request, leaderboard_id):
                    'topmembers': toplist,
                    'N': N})
 
+@login_required
+def leaderboard_admin(request, leaderboard_id):
+    """Leaderboard Admin Page."""
+    this_leaderboard = Leaderboard.objects.get(id=leaderboard_id)
+
+    #Get all Members of leaderboard
+    member_list = this_leaderboard.member_set
+
+    return render(request,
+                  'leaderboard_admin.html',
+                  {'leaderboard': this_leaderboard,
+                   'member_list': member_list})
+
 def match_history(request, leaderboard_id):
     """Shows the match history of a leaderboard."""
     # Get the instance of this leaderboard
