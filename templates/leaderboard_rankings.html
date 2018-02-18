@@ -22,13 +22,24 @@ The rankings page of a leaderboard.
 			</tr>
 
 			{# List the top N members of the leaderboard #}
-			{% for member in rankings %}
+			{% for rankedmember in rankings %}
 				<tr>
-					<td>{{ forloop.counter }}</td>
-					<td>{{ member.profileuser.user.username }}</td>
-					<td>{{ member.elo|floatformat:"0" }}</td>
-					<td>{{ member.wins }}/{{ member.losses }}</td>
-					<td>{% widthratio member.wins member.wins|add:member.losses 100 %}%</td>
+
+					{# Highlight row if current user #}
+					{% if member == rankedmember %}
+						<td style="font-weight: bold">{{ forloop.counter }}</td>
+						<td style="font-weight: bold">{{ rankedmember.profileuser.user.username }}</td>
+						<td style="font-weight: bold">{{ rankedmember.elo|floatformat:"0" }}</td>
+						<td style="font-weight: bold">{{ rankedmember.wins }}/{{ rankedmember.losses }}</td>
+						<td style="font-weight: bold">{% widthratio rankedmember.wins rankedmember.wins|add:rankedmember.losses 100 %}%</td>
+					{% else %}
+						<td>{{ forloop.counter }}</td>
+						<td>{{ rankedmember.profileuser.user.username }}</td>
+						<td>{{ rankedmember.elo|floatformat:"0" }}</td>
+						<td>{{ rankedmember.wins }}/{{ rankedmember.losses }}</td>
+						<td>{% widthratio rankedmember.wins rankedmember.wins|add:rankedmember.losses 100 %}%</td>
+					{% endif %}
+
 				</tr>
 			{% endfor %}
 
