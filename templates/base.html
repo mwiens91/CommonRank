@@ -32,10 +32,10 @@ main navigation links.
 				<div class="apptitlebox">{% block toppagetitle %}CommonRank{% endblock %}</div>
 				<div class="appsettingsbox">
 					<div></div>
-					<div><a href="">settings</a></div>
-					
-					{# Show logout if user is logged in #}
+
+					{# Show logout and settings if user is logged in #}
 					{% if user.is_authenticated %}
+						<div><a href="">settings</a></div>
 						<div><a href="{% url 'logout' %}">logout</a></div>
 					{% endif %}
 
