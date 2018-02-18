@@ -23,7 +23,7 @@ The home page of a leaderboard.
 				<th>Username</th>
 				<th>ELO</th>
 				<th>W/L</th>
-				<th>Ratio</th>
+				<th>Win %</th>
 			</tr>
 
 			{# List the top N members of the leaderboard #}
@@ -33,7 +33,7 @@ The home page of a leaderboard.
 					<td>{{ member.profileuser.user.username }}</td>
 					<td>{{ member.elo }}</td>
 					<td>{{ member.wins }}/{{ member.losses }}</td>
-					<td>{% widthratio member.wins member.wins|add:member.losses 100 %}</td>
+					<td>{% widthratio member.wins member.wins|add:member.losses 100 %}%</td>
 				</tr>
 			{% endfor %}
 
