@@ -26,6 +26,7 @@ urlpatterns = [
     path(r'leaderboard/<int:leaderboard_id>/match/create', core_views.create_match, name='match_create'),
     path(r'leaderboard/<int:leaderboard_id>/member/<int:member_id>/verify_matches', core_views.match_verify_list, name='match_verify_list'),
     path(r'leaderboard/<int:leaderboard_id>/match_history', core_views.match_history, name='match_history'),
+    path(r'leaderboard/<int:leaderboard_id>/rankings', core_views.leaderboard_rankings, name='leaderboard_rankings'),
     path(r'login/', auth_views.login, {'template_name': 'login.html'}, name='login'),
     path(r'logout/', auth_views.logout, {'next_page': 'login'}, name='logout'),
     path(r'signup/', core_views.profile_signup, name='signup'),

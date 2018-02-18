@@ -45,6 +45,20 @@ def leaderboard_home(request, leaderboard_id):
                    'N': N})
 
 @login_required
+def leaderboard_rankings(request, leaderboard_id):
+    """Leaderboard ranking page."""
+    # Get the instance of this leaderboard
+    thisleaderboard = Leaderboard.objects.get(id=leaderboard_id)
+
+    # Get the members for the leaderboard, sorted by elo
+    rankings = thisleaderboard.member_set.order_by('-elo')
+
+    return render(request,
+                  'leaderboard_rankings.html',
+                  {'leaderboard': thisleaderboard,
+                   'rankings': rankings})
+
+@login_required
 def leaderboard_admin(request, leaderboard_id):
     """Leaderboard Admin Page."""
     this_leaderboard = Leaderboard.objects.get(id=leaderboard_id)

@@ -1,25 +1,16 @@
 {% extends "base.html" %}
 
 {% comment %}
-The home page of a leaderboard.
+The rankings page of a leaderboard.
 {% endcomment %}
 
-{% block title %}{{ leaderboard.name }}{% endblock %}
+{% block title %}{{ leaderboard.name }} | rankings{% endblock %}
 
 {% block toppagetitle %}{{ leaderboard.name }}{% endblock %}
 
 {% block content %}
 
-	<h2>Useful options</h2>
-	<ul>
-		<li><a href='{% url 'match_create' leaderboard.id %}'>Submit match</a></li>
-		<li><a href='{% url 'match_verify_list' leaderboard.id member.id %}'>Verify matches</li>
-		<li><a href='{% url 'match_history' leaderboard.id %}'>Match history</a></li>
-		<li><a href='{% url 'leaderboard_rankings' leaderboard.id %}'>Rankings</a></li>
-		<li>Invite members</li>
-	</ul>
-
-	<h2>Top {{ N }}</h2>
+	<h2>Rankings</h2>
 	<table class="leaderboardtable">
 		<tbody>
 			<tr>
@@ -31,7 +22,7 @@ The home page of a leaderboard.
 			</tr>
 
 			{# List the top N members of the leaderboard #}
-			{% for member in topmembers %}
+			{% for member in rankings %}
 				<tr>
 					<td>{{ forloop.counter }}</td>
 					<td>{{ member.profileuser.user.username }}</td>
