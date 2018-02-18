@@ -14,7 +14,7 @@ The home page of a leaderboard.
 	<ul>
 		<li><a href='{% url 'match_create' leaderboard.id %}'>Submit match</a></li>
 		<li>Verify matches</li>
-		<li>Match history</li>
+		<li><a href='{% url 'match_history' leaderboard.id %}'>Match history</a></li>
 		<li>Rankings</li>
 		<li>Invite members</li>
 	</ul>
