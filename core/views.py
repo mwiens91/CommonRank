@@ -152,8 +152,8 @@ def create_match(request, leaderboard_id):
     player1 = Member.objects.filter(
                                     profileuser__user_id=request.user.id).filter(
                                     leaderboard_id=leaderboard_id)[0]
+    leaderboard = Leaderboard.objects.get(id=leaderboard_id)
     if request.method == 'POST':
-        leaderboard = Leaderboard.objects.get(id=leaderboard_id)
         form = CreateMatchSignUpForm(request.POST, leaderboard_id=leaderboard_id, my_id=player1.id)
         if form.is_valid():
             player2 = form.cleaned_data['player2']
@@ -168,7 +168,8 @@ def create_match(request, leaderboard_id):
             return redirect(leaderboard_home, leaderboard_id=leaderboard_id, member_id=player1.id)
     else:
         form = CreateMatchSignUpForm(leaderboard_id=leaderboard_id, my_id=player1.id)
-    return render(request, 'match_create.html', {'form': form})
+    return render(request, 'match_create.html', {'form': form,
+                                                 'leaderboard': leaderboard})
 
 @login_required
 @require_POST
