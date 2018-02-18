@@ -117,7 +117,7 @@ tbody th{
 	text-align: left;
 }
 
-/* Leaderboard home table */
+/* Leaderboard rankings table */
 .leaderboardtable tbody th:nth-child(1) {
 	width: 3em;
 }
@@ -146,4 +146,23 @@ tbody th{
 }
 .matchhistorytable tbody th:nth-child(4){
 	width: 5em;
+}
+.matchhistorytable tbody th:nth-child(5){
+	width: 5em;
+}
+
+/* The grid showing the matches to verify */
+.verifymatchgrid{
+	display: grid;
+	grid-gap: 3px;
+	background-color: #fff;
+}
+.verifymatchbox {
+	display: flex;
+	justify-content: space-between;
+	background-color: #444;
+	color: #fff;
+	border-radius: 5px;
+	max-width: 20em;
+	padding: 1em;
 }

@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
 from core.models import Leaderboard, Member, Profile, User, Match
 from core.forms import LeaderboardSignUpForm, ProfileSignUpForm, CreateMatchSignUpForm
 
@@ -153,16 +155,22 @@ def create_match(request, leaderboard_id):
     return render(request, 'match_create.html', {'form': form})
 
 @login_required
-def verify_match(request, match_id):
-    """ Verify match results by editing the match """
+@require_POST
+def verify_match(request, leaderboard_id, match_id):
+    """Verify match results."""
     match = Match.objects.get(id=match_id)
-    if request.method == 'POST':
-        match.state = 2
-        form = VerifyMatchSignUpForm(request.POST, instance=match)
-        if form.is_valid():
-            form.save()
-            return render(request, 'verify_match.html', {'match':match, 'match_id':match_id, 'form':form})
+    match.state = 2
+    match.save()
 
-    else:
-        form = VerifyMatchSignUpForm(None, instance=match)
-    return render(request, 'verify_match.html', {'match':match, 'match_id':match_id, 'form':form})
+    # Update ELO
+
+    #if request.META['HTTP_ACCEPT'] == 'application/json':
+    return JsonResponse({'match_id': match_id}, status=200)
+
+@login_required
+@require_POST
+def delete_match(request, leaderboard_id, match_id):
+    """Delete a match."""
+    Match.objects.get(id=match_id).delete()
+
+    return JsonResponse({'match_id': match_id}, status=200)

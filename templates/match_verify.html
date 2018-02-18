@@ -14,12 +14,36 @@ This page shows the matches that need verification by a player.
 
 	{# List all the matches #}
 	{% if matches %}
-		{% for match in matches %}
-			<div>{{ match }}</div>
-		{% endfor %}
+		<div class="verifymatchgrid">
+			{% for match in matches %}
+				<div class="verifymatchbox">
+					<div>
+						Did you lose a match to {{ match.winner.profileuser.user.username }}?
+					</div>
+					<form action="{% url 'match_verify' leaderboard.id match.id %}" method="post">
+						{% csrf_token %}
+						<button type="submit">
+							yes
+						</button>
+					</form>
+
+					<form action="{% url 'match_remove' leaderboard.id match.id %}" method="post">
+						{% csrf_token %}
+						<button type="submit">
+							no
+						</button>
+					</form>
+				</div>
+			{% endfor %}
+		</div>
 
 	{% else %}
 		<div>No matches to verify :)</div>
 	{% endif %}
 
+{% endblock %}
+
+{% block javascript %}
+	{% load static %}
+	<script src="{% static "verify_match_listener.js" %}"></script>
 {% endblock %}

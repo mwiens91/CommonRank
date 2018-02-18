@@ -21,6 +21,7 @@ This page shows the match history of a leaderboard.
 					<th>ELO</th>
 					<th>Player 2</th>
 					<th>ELO</th>
+					<th>State</th>
 				</tr>
 
 				{# Bold the winner of each match #}
@@ -30,6 +31,7 @@ This page shows the match history of a leaderboard.
 						<td>{{ match.player1.elo }}</td>
 						<td>{{ match.player2.profileuser.user.username }}</td>
 						<td>{{ match.player2.elo }}</td>
+						<td>{{ match.state }}</td>
 					</tr>
 				{% endfor %}
 
