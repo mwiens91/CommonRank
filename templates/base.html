@@ -35,7 +35,6 @@ main navigation links.
 
 					{# Show logout and settings if user is logged in #}
 					{% if user.is_authenticated %}
-						<div><a href="">settings</a></div>
 						<div><a href="{% url 'logout' %}">logout</a></div>
 					{% endif %}
 
