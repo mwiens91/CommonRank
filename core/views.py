@@ -218,9 +218,15 @@ def create_match(request, leaderboard_id, member_id):
                 if form.cleaned_data.get('outcome') == 'win':
                     Match.objects.create(player1=player1, player2=player2, leaderboard=leaderboard, winner=player1, loser=player2, state=1, date_created=timezone.now())
                     return redirect(leaderboard_home, leaderboard_id=leaderboard_id, member_id=player1.id)
-                Match.objects.create(player1=player1, player2=player2, leaderboard=leaderboard,
-                                     loser=player1, winner=player2, state=1, date_created=timezone.now())
+
+                # Player lost
+                the_match = Match.objects.create(player1=player1, player2=player2, leaderboard=leaderboard,
+                                     loser=player1, winner=player2, state=2, date_created=timezone.now())
+
+                # Update ELO
+                update_elo(the_match.winner, the_match.loser, leaderboard.elo_sensitivity)
                 return redirect(leaderboard_home, leaderboard_id=leaderboard_id, member_id=player1.id)
+
             Match.objects.create(player1=player1, player2=player2, leaderboard=leaderboard,
                                 state=0, date_created=timezone.now())
             return redirect(leaderboard_home, leaderboard_id=leaderboard_id, member_id=player1.id)
