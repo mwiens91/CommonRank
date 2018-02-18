@@ -69,7 +69,7 @@ def profile_signup(request):
     else:
         form = ProfileSignUpForm()
     return render(request, 'signup.html', {'form': form})
-"""
+
 @login_required
 def create_match(request):
     if request.method == 'POST':
@@ -82,4 +82,3 @@ def create_match(request):
     else:
         form = CreateMatchSignUpForm(instance=Match())
     return render(request, 'create-match.html', {'form': form})
-"""
