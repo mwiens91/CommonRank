@@ -72,7 +72,7 @@ def profile_signup(request):
     return render(request, 'signup.html', {'form': form})
 
 @login_required
-def create_match(request):
+def create_match(request, leaderboard_id):
     if request.method == 'POST':
         leaderboard = Leaderboard.objects.get(id=form.leaderboard.id)
         form = CreateMatchSignUpForm(request.POST, leaderboard_id=leaderboard.id)
@@ -82,4 +82,4 @@ def create_match(request):
             return redirect(home)
     else:
         form = CreateMatchSignUpForm(instance=Match())
-    return render(request, 'create-match.html', {'form': form})
+    return render(request, 'match_create.html', {'form': form})
