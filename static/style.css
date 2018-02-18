@@ -70,6 +70,11 @@ textarea
 	font-weight: bold;
 	flex-grow: 1;
 }
+@media (max-width: 699px) {
+	.apptitlebox {
+		text-align: center;
+	}
+}
 .appsettingsbox {
 	text-align: center;
 	margin-top: 10px;
