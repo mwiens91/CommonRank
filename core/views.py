@@ -9,7 +9,6 @@ from core.forms import LeaderboardSignUpForm, ProfileSignUpForm
 def leaderboard_create(request):
     """Leaderboard creation page."""
     if request.method == 'POST':
-        newtourney.host = request.user.profile
         form = LeaderboardSignUpForm(request.POST)
         if form.is_valid():
             thisleaderboard = form.save()
