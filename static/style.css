@@ -151,6 +151,17 @@ tbody th{
 	width: 5em;
 }
 
+/* Upcoming matches table */
+.upcomingmatchestable tbody th:nth-child(1){
+	width: 15em;
+}
+.upcomingmatchestable tbody th:nth-child(2){
+	width: 15em;
+}
+.upcomingmatchestable tbody th:nth-child(3){
+	width: 6em;
+}
+
 /* The grid showing the matches to verify */
 .verifymatchgrid{
 	display: grid;

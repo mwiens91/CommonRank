@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% comment %}
+The upcoming  match result submission form.
+{% endcomment %}
+
+{% block title %}{{ leaderboard.name }} | submit match results{% endblock %}
+
+{% block toppagetitle %}{{ leaderboard.name }}{% endblock %}
+
+{% block content %}
+	<div style="text-align: center">
+		<h3>Submit match results</h3>
+
+		<div>Did you bless up <strong>{{ opponent_name }}</strong>?</div>
+
+		<div style="display: flex; justify-content: center; padding-top: 1em">
+			<div>
+				<form method="post" action="{% url 'match_submit_results' leaderboard.id member.id match.id %}">
+					{% csrf_token %}
+					<input type=hidden name="result" value="win">
+					<button type="submit">
+						yeah dawg
+					</button>
+				</form>
+			</div>
+
+			<div>
+				<form method="post" action="{% url 'match_submit_results' leaderboard.id member.id match.id %}">
+					{% csrf_token %}
+					<input type=hidden name="result" value="loss">
+					<button type="submit">
+						no dawg
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+{% endblock %}

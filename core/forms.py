@@ -33,8 +33,8 @@ class CreateMatchSignUpForm(forms.ModelForm):
         self.fields['player2'].queryset = member_queryset
 
     player2 = forms.ModelChoiceField(queryset=Member.objects.none())
-    already_played = forms.BooleanField()
-    did_win = forms.BooleanField()
+    already_played = forms.BooleanField(required=False)
+    did_win = forms.BooleanField(required=False)
 
     class Meta:
         model = Match

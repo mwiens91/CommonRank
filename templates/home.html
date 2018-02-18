@@ -12,12 +12,12 @@ The home page of a user.
 
 			<h2>{{ user.first_name }}'s leaderboards:</h2>
 
-			{% if leaderboards %}
+			{% if members_and_leaderboards %}
 				<ul>
 
 					{# List the tourneys #}
-					{% for leaderboard in leaderboards %}
-					<li><a href='{% url 'leaderboard_home' leaderboard.id %}'>{{ leaderboard.name }}</a></li>
+					{% for member, leaderboard in members_and_leaderboards %}
+					<li><a href='{% url 'leaderboard_home' leaderboard.id member.id %}'>{{ leaderboard.name }}</a></li>
 					{% endfor %}
 
 				</ul>
