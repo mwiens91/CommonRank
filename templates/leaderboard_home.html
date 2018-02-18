@@ -45,4 +45,14 @@ The home page of a leaderboard.
 	</table>
 
 	<h2>Upcoming matches</h2>
+	{% if upcoming_matches %}
+
+		{# List the upcoming matches #}
+		{% for match in upcoming_matches %}
+			<div>{{ match }}</div>
+		{% endfor %}
+
+	{% else %}
+		<div>No upcoming matches :(</div>
+	{% endif %}
 {% endblock %}

@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from core.models import Leaderboard, Member, Profile, User, Match
@@ -42,12 +43,16 @@ def leaderboard_home(request, leaderboard_id, member_id):
     toplist = toplist[:N]
 
     # Get the upcoming matches
+    upcoming_matches = thisleaderboard.match_set.filter(
+                    Q(player1_id=member_id) | Q(player2_id=member_id)).filter(
+                    state=0)
 
     return render(request,
                   'leaderboard_home.html',
                   {'leaderboard': thisleaderboard,
                    'member': this_member,
                    'topmembers': toplist,
+                   'upcoming_matches': upcoming_matches,
                    'N': N})
 
 @login_required
