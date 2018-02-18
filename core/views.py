@@ -3,6 +3,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from datetime import datetime
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from core.models import Leaderboard, Member, Profile, User, Match
@@ -204,12 +205,13 @@ def create_match(request, leaderboard_id):
             player2 = form.cleaned_data['player2']
             if form.cleaned_data.get('outcome') != 'postpone':
                 if form.cleaned_data.get('outcome') == 'win':
-                    Match.objects.create(player1=player1, player2=player2, leaderboard=leaderboard, winner=player1, loser=player2, state=1)
+                    Match.objects.create(player1=player1, player2=player2, leaderboard=leaderboard, winner=player1, loser=player2, state=1, date_created=datetime.now())
                     return redirect(leaderboard_home, leaderboard_id=leaderboard_id, member_id=player1.id)
                 Match.objects.create(player1=player1, player2=player2, leaderboard=leaderboard,
-                                     loser=player1, winner=player2, state=1)
+                                     loser=player1, winner=player2, state=1, date_created=datetime.now())
                 return redirect(leaderboard_home, leaderboard_id=leaderboard_id, member_id=player1.id)
-            Match.objects.create(player1=player1, player2=player2, leaderboard=leaderboard, state=0)
+            Match.objects.create(player1=player1, player2=player2, leaderboard=leaderboard,
+                                state=0, date_created=datetime.now())
             return redirect(leaderboard_home, leaderboard_id=leaderboard_id, member_id=player1.id)
     else:
         form = CreateMatchSignUpForm(leaderboard_id=leaderboard_id, my_id=player1.id)
