@@ -25,23 +25,26 @@ class BaseInvitationsAdapter(object):
         return ret
 
     def format_email_subject(self, subject):
-        prefix = app_settings.EMAIL_SUBJECT_PREFIX
-        if prefix is None:
-            site = Site.objects.get_current()
-            prefix = "[{name}] ".format(name=site.name)
-        return prefix + force_text(subject)
+        prefix = "StinkySerbian"#app_settings.EMAIL_SUBJECT_PREFIX
+        #if prefix is None:
+        #    site = Site.objects.get_current()
+        #    prefix = "[{name}] ".format(name=site.name)
+        return prefix# + force_text(subject)
 
     def render_mail(self, template_prefix, email, context):
         """
         Renders an e-mail to `email`.  `template_prefix` identifies the
         e-mail that is to be sent, e.g. "account/email/email_confirmation"
         """
+        print("tyler0")
         subject = render_to_string('{0}_subject.txt'.format(template_prefix),
                                    context)
         # remove superfluous line breaks
+        print("tyler0.5")
         subject = " ".join(subject.splitlines()).strip()
+        print("tyler0.75")
         subject = self.format_email_subject(subject)
-
+        print("tyler1")
         bodies = {}
         for ext in ['html', 'txt']:
             try:
@@ -49,27 +52,37 @@ class BaseInvitationsAdapter(object):
                 bodies[ext] = render_to_string(template_name,
                                                context).strip()
             except TemplateDoesNotExist:
+                print("all is lost branko")
+                print(ext)
                 if ext == 'txt' and not bodies:
+                    print("truely all is lost now")
                     # We need at least one body
                     raise
         if 'txt' in bodies:
-            msg = EmailMultiAlternatives(subject,
-                                         bodies['txt'],
-                                         settings.DEFAULT_FROM_EMAIL,
-                                         [email])
+            print("?")
+            print("subject = ", subject)
+            print("body = ", bodies['txt'])
+            print("from email =", settings.DEFAULT_FROM_EMAIL)
+            print("to email = ", email)
+            msg = EmailMessage(subject=subject, body=bodies['txt'], from_email=settings.DEFAULT_FROM_EMAIL, to=[email])
+            print("XD")
             if 'html' in bodies:
+                print("how did we get here")
                 msg.attach_alternative(bodies['html'], 'text/html')
         else:
+            print("uhh i guess we're here")
             msg = EmailMessage(subject,
                                bodies['html'],
                                settings.DEFAULT_FROM_EMAIL,
-                               [email])
+                               email)
             msg.content_subtype = 'html'  # Main content is now text/html
         return msg
 
     def send_mail(self, template_prefix, email, context):
         msg = self.render_mail(template_prefix, email, context)
+        print("have we reached branko yet")
         msg.send()
+        print("branko has been reached")
 
     def is_open_for_signup(self, request):
         if hasattr(request, 'session') and request.session.get(
