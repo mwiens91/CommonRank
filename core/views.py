@@ -33,7 +33,7 @@ def leaderboard_home(request, leaderboard_id):
     N = 10
     toplist = thisleaderboard.member_set.order_by('-elo')
 
-    if length(toplist) > 10:
+    if len(toplist) > 10:
         toplist = toplist[:10]
 
     return render(request,
