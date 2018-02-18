@@ -176,7 +176,7 @@ class Match(models.Model):
     #deadline = models.DateTimeField(blank=datetime.date.today() + datetime.timedelta(days=leaderboard.deadline_length), null=False)
 
     def __str__(self):
-        return '%s || Match %s ' % self.leaderboard.name, self.id)
+        return '%s || Match %s ' % (self.leaderboard.name, self.id)
 
     #create_match is called when a challenge is created or when a regular match is submitted. Creates match object and fills in necessary information, then calls add_match to add the match to the leaderboard
     def create_match(player1,player2,leaderboard_id):
@@ -196,6 +196,6 @@ class Report(models.Model):
                                 blank=False,)
 
     def __str__(self):
-        return '%s || Match %s || Report %s ' % self.leaderboard.name,
+        return '%s || Match %s || Report %s ' % (self.leaderboard.name,
                                              self.match.id,
                                              self.id)
