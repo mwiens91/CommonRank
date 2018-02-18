@@ -105,29 +105,45 @@ ul {
 	max-width: 50%;
 }
 
-/* Leaderboard table */
-.leaderboardtable {
+/* Tables */
+table {
 	table-layout: fixed;
 	border-collapse: collapse;
 }
 tbody tr:nth-child(odd) {
-  background-color: #eef;
+	background-color: #eef;
 }
 tbody th{
 	text-align: left;
 }
-tbody th:nth-child(1) {
+
+/* Leaderboard home table */
+.leaderboardtable tbody th:nth-child(1) {
 	width: 3em;
 }
-tbody th:nth-child(2) {
+.leaderboardtable tbody th:nth-child(2) {
 	width: 20em;
 }
-tbody th:nth-child(3) {
+.leaderboardtable tbody th:nth-child(3) {
 	width: 5em;
 }
-tbody th:nth-child(4) {
+.leaderboardtable tbody th:nth-child(4) {
 	width: 4em;
 }
-tbody th:nth-child(5) {
+.leaderboardtable tbody th:nth-child(5) {
 	width: 4em;
+}
+
+/* Match history table */
+.matchhistorytable tbody th:nth-child(1){
+	width: 20em;
+}
+.matchhistorytable tbody th:nth-child(2){
+	width: 5em;
+}
+.matchhistorytable tbody th:nth-child(3){
+	width: 20em;
+}
+.matchhistorytable tbody th:nth-child(4){
+	width: 5em;
 }
