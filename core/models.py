@@ -105,7 +105,7 @@ class Member(models.Model):
     losses = models.PositiveIntegerField(default=0, null=False)
 
     def __str__(self):
-        return '%s' % self.profile.user.username
+        return '%s' % self.profileuser.user.username
 
     def increase_privilege(self):
         if self.privilege <= 4:

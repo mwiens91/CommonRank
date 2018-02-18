@@ -66,14 +66,13 @@ def profile_signup(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=user.username, password=raw_password)
             login(request, user)
-            return redirect(home)
+            return redirect('home')
     else:
         form = ProfileSignUpForm()
     return render(request, 'signup.html', {'form': form})
-
+"""
 @login_required
 def create_match(request):
-    """Create Match Page"""
     if request.method == 'POST':
         leaderboard = Leaderboard.objects.get(id=form.leaderboard.id)
         form = CreateMatchSignUpForm(request.POST, leaderboard_id=leaderboard.id)
@@ -84,3 +83,4 @@ def create_match(request):
     else:
         form = CreateMatchSignUpForm(instance=Match())
     return render(request, 'create-match.html', {'form': form})
+"""
