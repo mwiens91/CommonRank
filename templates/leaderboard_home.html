@@ -38,7 +38,7 @@ The home page of a leaderboard.
 				<tr>
 					<td>{{ forloop.counter }}</td>
 					<td>{{ member.profileuser.user.username }}</td>
-					<td>{{ member.elo }}</td>
+					<td>{{ member.elo|floatformat:"0" }}</td>
 					<td>{{ member.wins }}/{{ member.losses }}</td>
 					<td>{% widthratio member.wins member.wins|add:member.losses 100 %}%</td>
 				</tr>
