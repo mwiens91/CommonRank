@@ -9,8 +9,8 @@ from core.forms import LeaderboardSignUpForm, ProfileSignUpForm
 def leaderboard_create(request):
     """Leaderboard creation page."""
     if request.method == 'POST':
-        newleaderboard = Leaderboard()
-        form = LeaderboardSignUpForm(request.POST, request.FILES, instance=newleaderboard)
+        newtourney.host = request.user.profile
+        form = LeaderboardSignUpForm(request.POST)
         if form.is_valid():
             thisleaderboard = form.save()
             Member.objects.create(leaderboard=thisleaderboard,
@@ -61,3 +61,17 @@ def profile_signup(request):
     else:
         form = ProfileSignUpForm()
     return render(request, 'signup.html', {'form': form})
+
+@login_required
+def create_match(request):
+    """Create Match Page"""
+    if request.method == 'POST':
+        leaderboard = Leaderboard.objects.get(id=form.leaderboard)
+        form = CreateMatchSignUpForm(request.POST, leaderboard_id=leaderboard.id)
+        if form.is_valid():
+            Match.objects.create(player1=request.user.profile, player2=form.player2, Leaderboard=leaderboard)
+            form.save()
+            return redirect(home)
+    else:
+        form = CreateMatchSignUpForm(instance=Match())
+    return render(request, 'create-match.html', {'form': form})
