@@ -116,13 +116,6 @@ class Member(models.Model):
         if self.privilege >= 0:
             self.privilege -= 1
 
-    #only winners can submit matches
-    def submit_match(self,loser,leaderboard_id):
-        match = create_match(self,loser,leaderboard_id)
-        match.winner = self
-        match.loser = loser
-        match.state = 1 #unverified
-
     #only losers can verify matches
     def verify_match(self,match_id):
         match = Match.objects.get(pk=match_id)
