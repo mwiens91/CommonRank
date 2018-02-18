@@ -136,19 +136,19 @@ tbody th{
 
 /* Match history table */
 .matchhistorytable tbody th:nth-child(1){
-	width: 20em;
+	width: 6.9em;
 }
 .matchhistorytable tbody th:nth-child(2){
-	width: 5em;
-}
-.matchhistorytable tbody th:nth-child(3){
 	width: 20em;
 }
+.matchhistorytable tbody th:nth-child(3){
+	width: 3em;
+}
 .matchhistorytable tbody th:nth-child(4){
-	width: 5em;
+	width: 20em;
 }
 .matchhistorytable tbody th:nth-child(5){
-	width: 5em;
+	width: 3em;
 }
 
 /* Upcoming matches table */

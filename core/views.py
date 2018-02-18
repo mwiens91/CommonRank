@@ -98,7 +98,7 @@ def match_history(request, leaderboard_id, member_id):
     thisleaderboard = Leaderboard.objects.get(id=leaderboard_id)
 
     # Get all of the matches of the leaderboard
-    matches = thisleaderboard.match_set.all()
+    matches = thisleaderboard.match_set.filter(state=2)
 
     # Get the member
     this_member = Member.objects.get(id=member_id)

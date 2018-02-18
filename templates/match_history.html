@@ -17,21 +17,21 @@ This page shows the match history of a leaderboard.
 		<table class='matchhistorytable'>
 			<tbody>
 				<tr>
-					<th>Player 1</th>
+					<th>Date</th>
+					<th>Winner</th>
 					<th>ELO</th>
-					<th>Player 2</th>
+					<th>Loser</th>
 					<th>ELO</th>
-					<th>State</th>
 				</tr>
 
 				{# Bold the winner of each match #}
 				{% for match in matches %}
 					<tr>
-						<td>{{ match.player1.profileuser.user.username }}</td>
-						<td>{{ match.player1.elo }}</td>
-						<td>{{ match.player2.profileuser.user.username }}</td>
-						<td>{{ match.player2.elo }}</td>
-						<td>{{ match.state }}</td>
+						<td>{{ match.date_created|date:"Y-m-d" }}</td>
+						<td>{{ match.winner.profileuser.user.username }}</td>
+						<td>{{ match.winner.elo|floatformat:"0" }}</td>
+						<td>{{ match.loser.profileuser.user.username }}</td>
+						<td>{{ match.loser.elo|floatformat:"0" }}</td>
 					</tr>
 				{% endfor %}
 			</tbody>
