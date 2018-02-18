@@ -4,6 +4,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 import datetime
 from core.update_elo import update_elo
+from timezone_field import TimeZoneField
 
 class Profile(models.Model):
 
@@ -13,6 +14,8 @@ class Profile(models.Model):
     bio = models.TextField(max_length=200,
                             null=True,
                             blank=False)
+    timezone = TimeZoneField(default='Canada/Pacific')
+    location = models.CharField(max_length=30, null=True, blank=True)
 
     def __str__(self):
         return '%s' % self.user.username
