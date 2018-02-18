@@ -137,15 +137,16 @@ def create_match(request, leaderboard_id):
         leaderboard = Leaderboard.objects.get(id=leaderboard_id)
         form = CreateMatchSignUpForm(request.POST, leaderboard_id=leaderboard_id, my_id=member_id)
         if form.is_valid():
-            if form.fields['already_played'] == True:
-                if form.data.get('winner') == True:
-                    Match.objects.create(player1=request.user.profile, player2=form.player2, Leaderboard=leaderboard, winner=request.user.profile, loser=form.player2, state=1)
-                    return redirect(home)
-                Match.objects.create(player1=request.user.profile, player2=form.player2, Leaderboard=leaderboard,
-                                     loser=request.user.profile, winner=form.player2, state=1)
-                return redirect(home)
-            print("UHOH")
-            Match.objects.create(player1=Member.objects.filter(profileuser__user_id=request.user.id)[0], player2=form.cleaned_data['player2'], leaderboard=leaderboard, state=0)
+            player1 = Member.objects.filter(profileuser__user_id=request.user.id)[0]
+            player2 = form.cleaned_data['player2']
+            if form.cleaned_data['already_played'] == True:
+                if form.cleaned_data.get('winner') == True:
+                    Match.objects.create(player1=player1, player2=player2, leaderboard=leaderboard, winner=player1, loser=player2, state=1)
+                    return redirect(leaderboard_home, leaderboard_id=leaderboard_id)
+                Match.objects.create(player1=player1, player2=player2, leaderboard=leaderboard,
+                                     loser=player1, winner=player2, state=1)
+                return redirect(leaderboard_home, leaderboard_id=leaderboard_id)
+            Match.objects.create(player1=player1, player2=player2, leaderboard=leaderboard, state=0)
             return redirect(leaderboard_home, leaderboard_id=leaderboard_id)
     else:
         form = CreateMatchSignUpForm(leaderboard_id=leaderboard_id, my_id=member_id)
