@@ -144,24 +144,25 @@ def profile_signup(request):
 
 @login_required
 def create_match(request, leaderboard_id):
-    member_id = Member.objects.filter(profileuser__user_id=request.user.id)[0].id
+    player1 = Member.objects.filter(
+                                    profileuser__user_id=request.user.id).filter(
+                                    leaderboard_id=leaderboard_id)[0]
     if request.method == 'POST':
         leaderboard = Leaderboard.objects.get(id=leaderboard_id)
-        form = CreateMatchSignUpForm(request.POST, leaderboard_id=leaderboard_id, my_id=member_id)
+        form = CreateMatchSignUpForm(request.POST, leaderboard_id=leaderboard_id, my_id=player1.id)
         if form.is_valid():
-            player1 = Member.objects.filter(profileuser__user_id=request.user.id)[0]
             player2 = form.cleaned_data['player2']
             if form.cleaned_data['already_played'] == True:
-                if form.cleaned_data.get('winner') == True:
+                if form.cleaned_data.get('did_win'):
                     Match.objects.create(player1=player1, player2=player2, leaderboard=leaderboard, winner=player1, loser=player2, state=1)
-                    return redirect(leaderboard_home, leaderboard_id=leaderboard_id, member_id=member_id)
+                    return redirect(leaderboard_home, leaderboard_id=leaderboard_id, member_id=player1.id)
                 Match.objects.create(player1=player1, player2=player2, leaderboard=leaderboard,
                                      loser=player1, winner=player2, state=1)
-                return redirect(leaderboard_home, leaderboard_id=leaderboard_id, member_id=member_id)
+                return redirect(leaderboard_home, leaderboard_id=leaderboard_id, member_id=player1.id)
             Match.objects.create(player1=player1, player2=player2, leaderboard=leaderboard, state=0)
-            return redirect(leaderboard_home, leaderboard_id=leaderboard_id, member_id=member_id)
+            return redirect(leaderboard_home, leaderboard_id=leaderboard_id, member_id=player1.id)
     else:
-        form = CreateMatchSignUpForm(leaderboard_id=leaderboard_id, my_id=member_id)
+        form = CreateMatchSignUpForm(leaderboard_id=leaderboard_id, my_id=player1.id)
     return render(request, 'match_create.html', {'form': form})
 
 @login_required
