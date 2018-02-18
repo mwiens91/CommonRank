@@ -33,7 +33,12 @@ main navigation links.
 				<div class="appsettingsbox">
 					<div></div>
 					<div><a href="">settings</a></div>
-					<div><a href="{% url 'logout' %}">logout</a></div>
+					
+					{# Show logout if user is logged in #}
+					{% if user.is_authenticated %}
+						<div><a href="{% url 'logout' %}">logout</a></div>
+					{% endif %}
+
 				</div>
 
 			</div>
