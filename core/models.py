@@ -86,7 +86,6 @@ class Leaderboard(models.Model):
 
     def report_match(self, match, reason):
         Match.objects.get(id=match.id).report(reason)
-        
 
 class Member(models.Model):
 
@@ -118,7 +117,7 @@ class Member(models.Model):
         match.state = 1 #unverified
 
     #only losers can verify matches
-    def verify_match(self,match_id)
+    def verify_match(self,match_id):
         match = Match.objects.get(pk=match_id)
         match.state = 2 #verified
         match.winner, match.loser = update_elo(match.winner,match.loser,1)
@@ -147,23 +146,37 @@ class Notification(models.Model):
 
 class Match(models.Model):
 
-    player1 = models.ForeignKey(Member, related_name='player1',)
-    player2 = models.ForeignKey(Member, related_name='player2',)
+    player1 = models.ForeignKey(Member,
+                                on_delete=models.CASCADE,
+                                null=True,
+                                blank=True,
+                                related_name='player1',)
+    player2 = models.ForeignKey(Member,
+                                on_delete=models.CASCADE,
+                                null=True,
+                                blank=True,
+                                related_name='player2',)
     leaderboard = models.ForeignKey(Leaderboard,
                                     on_delete=models.CASCADE,
                                     null=True,
                                     blank=True,)
+    winner = models.ForeignKey(Member,
+                                on_delete=models.CASCADE,
+                                null=True,
+                                blank=True,
+                                related_name='winner',)
+    loser = models.ForeignKey(Member,
+                                on_delete=models.CASCADE,
+                                null=True,
+                                blank=True,
+                                related_name='loser',)
+    deadline = models.DateTimeField(blank=datetime.date.today().timedelta(days=leaderboard.deadline_length), null=False)
     #create_match is called when a challenge is created or when a regular match is submitted. Creates match object and fills in necessary information, then calls add_match to add the match to the leaderboard
     def create_match(player1,player2,leaderboard_id):
        match = self.create(player1=player1,
                player2=player2,
                leaderboard=Leaderboard.objects.get(pk=leaderboard_id),
                state=0) #state 0 means challenged but not accepted yet)
-
-    winner = models.ForeignKey(Member, related_name='winner',)
-    loser = models.ForeignKey(Member, related_name='loser',)
-    deadline = models.DateTimeField(blank=datetime.date.today().timedelta(days=leaderboard.deadline_length), null=False)
-
 
 class Report(models.Model):
 
