@@ -26,7 +26,14 @@ def createleaderboard(request):
 @login_required
 def profile_home(request):
     """Profile home page."""
-    return render(request, 'home.html')
+    # Get all of a profile's leaderboards
+    leaderboards = request.user.profile.member_set.all().values('leaderboard')
+
+    # Get all of a profile's notifications
+    notifications = request.user.profile.notification_set.all()
+
+    return render(request, 'home.html', {'leaderboards': leaderboards,
+                                         'notifications': notifications})
 
 def profile_signup(request):
     """Profile sign up page."""

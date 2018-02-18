@@ -7,13 +7,52 @@ The home page of a user.
 {% block content %}
 	<p>Welcome {{ user.get_username }}!</p>
 	<section class="homepagecontainer">
+
+		{# The left column #}
 		<div class="homepage-column" style="margin-right: 0.69em">
+
 			<h2>{{ user.first_name }}'s leaderboards:</h2>
-			<p>lkajsdflkajsdfklja;kldsfja;ksjdf;lajsdfkl;jasldkfjakl;sdjflkajsdflk;jasdklfjaklsjdfklsdjf</p>
+
+			{% if leaderboards %}
+				<ul>
+
+					{# List the tourneys #}
+					{% for leaderboard in leaderboards %}
+						<li>{{ leaderboard.name }}</li>
+					{% endfor %}
+
+				</ul>
+			{% else %}
+				<div>No leaderboards :(</div>
+			{% endif %}
+
+			{# Other left-column options here #}
+			<ul>
+				<li>Create leaderboard</li>
+				<li>Invites</li>
+			</ul>
+
 		</div>
+
+		{# The right column #}
 		<div class="homepage-column" style="margin-left: 0.69em">
+			
+			{# Display notifications #}
 			<h2>Notifications</h2>
-			<p>lkajsdflkajsdfklja;kldsfja;k sjdf;lajs dfkl;jasldkfjakl;sdjfl kajsdflk; jasdklfjaklsjdfklsdjf</p>
+
+			{% if notifications %}
+				<ul>
+
+					{# List the notifications #}
+					{% for notification in notifications %}
+						<li>{{ notification }}</li>
+					{% endfor %}
+
+				</ul>
+			{% else %}
+				<div>No notifications :(</div>
+			{% endif %}
+
 		</div>
 	</section>
 {% endblock %}
