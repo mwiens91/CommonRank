@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% comment %}
+This page shows the matches that need verification by a player.
+{% endcomment %}
+
+{% block title %}{{ leaderboard.name }} | verify matches{% endblock %}
+
+{% block toppagetitle %}{{ leaderboard.name }}{% endblock %}
+
+{% block content %}
+
+	<h2>Verify matches</h2>
+
+	{# List all the matches #}
+	{% if matches %}
+		{% for match in matches %}
+			<div>{{ match }}</div>
+		{% endfor %}
+
+	{% else %}
+		<div>No matches to verify :)</div>
+	{% endif %}
+
+{% endblock %}

@@ -28,6 +28,9 @@ def leaderboard_home(request, leaderboard_id):
     # Get the instance of this leaderboard
     thisleaderboard = Leaderboard.objects.get(id=leaderboard_id)
 
+    # Get the member
+    this_member = Member.objects.filter(profileuser__user_id=request.user.id)[0]
+
     # Get the top-N for the leaderboard
     N = 10
     toplist = thisleaderboard.member_set.order_by('-elo')
@@ -38,6 +41,7 @@ def leaderboard_home(request, leaderboard_id):
     return render(request,
                   'leaderboard_home.html',
                   {'leaderboard': thisleaderboard,
+                   'member': this_member,
                    'topmembers': toplist,
                    'N': N})
 
@@ -64,6 +68,20 @@ def match_history(request, leaderboard_id):
 
     return render(request,
                   'match_history.html',
+                  {'leaderboard': thisleaderboard,
+                   'matches': matches})
+
+def match_verify_list(request, leaderboard_id, member_id):
+    """Shows a list of matches a member needs to verify."""
+    # Get the instance of this leaderboard
+    thisleaderboard = Leaderboard.objects.get(id=leaderboard_id)
+
+    # Get all of the matches of the leaderboard that the member needs to
+    # verify
+    matches = thisleaderboard.match_set.filter(loser_id=member_id).filter(state=1)
+
+    return render(request,
+                  'match_verify.html',
                   {'leaderboard': thisleaderboard,
                    'matches': matches})
 
