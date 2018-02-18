@@ -9,21 +9,26 @@ class NotificationInline(admin.TabularInline):
     """ Show the notfications of a profile """
     model = Notification
 
-class MatchInline(admin.TabularInline):
-    """ Show the matches of a member """
-    model = Match
 
 class ReportInline(admin.TabularInline):
     """ Show the reports of a match """
     model = Report
 
 class LeaderboardAdmin(admin.ModelAdmin):
-    inlines = (MemberInline, MatchInline,)
+     class MatchInline(admin.TabularInline):
+         """Show the matches of a member """
+         model = Match
+     inlines = (MemberInline, MatchInline,)
 
 class ProfileAdmin(admin.ModelAdmin):
     inlines = (MemberInline, NotificationInline)
 
 class MemberAdmin(admin.ModelAdmin):
+    class MatchInline(admin.TabularInline):
+        """Show the matches of a member """
+        model = Match
+        fk_name = 'player1'
+
     inlines = (MatchInline,)
 
 class MatchAdmin(admin.ModelAdmin):
