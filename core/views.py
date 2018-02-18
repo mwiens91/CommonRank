@@ -38,7 +38,7 @@ def leaderboard_home(request, leaderboard_id):
     return render(request,
                   'leaderboard_home.html',
                   {'leaderboard': thisleaderboard,
-                   'topmemebers': toplist})
+                   'topmembers': toplist})
 
 @login_required
 def profile_home(request):
