@@ -1,16 +1,13 @@
 # CommonRank
 
 CommonRank is a web app that lets you make customized, fully-featured
-ELO leaderboards instantly. Members of leaderboards will have access to
+ELO leaderboards instantly with a beautiful easy-to-use UI.
 
-+ auto matching
-+ challenges
-+ tournaments
+This app was inspired by the constant Super Smash Bros. matches
+happening in the ESSS common room. This app is for them
 
-while admins of leaderboards have control over
+## See it on desktop
 
-+ ELO sensitivity + decay
-+ global homepage features
-+ tournament structure
+## See it on mobile
 
-Of course there are more features, too. These are just the highlights :)
+![user home page](https://i.imgur.com/Jb9Mz5s.jpg "user home page")
