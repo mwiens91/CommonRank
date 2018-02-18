@@ -27,10 +27,8 @@ class CreateMatchSignUpForm(forms.ModelForm):
         leaderboard_id = kwargs.pop('leaderboard_id')
         my_id = kwargs.pop('my_id')
         member_queryset = Leaderboard.objects.get(id=leaderboard_id).member_set.exclude(id=my_id)
-        super(CreateMatchSignUpForm, self).__init__(*args, **kwargs)
-        self.fields['player2'].queryset = member_queryset
 
-    player2 = forms.ModelChoiceField(queryset=Member.objects.none())
+    #player2 = forms.ModelChoiceField(queryset=Leaderboard.objects.get(id=6).member_set)
     already_played = forms.BooleanField()
     did_win = forms.BooleanField()
     #player2 = forms.IntegerField()
@@ -38,3 +36,9 @@ class CreateMatchSignUpForm(forms.ModelForm):
     class Meta:
         model = Match
         fields = ('player2', 'already_played', 'did_win')
+
+class VerifyMatchSignUpForm(forms.ModelForm):
+
+    class Meta:
+        model = Match
+        fields = ('winner', 'loser',)

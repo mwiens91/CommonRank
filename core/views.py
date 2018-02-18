@@ -29,16 +29,30 @@ def leaderboard_home(request, leaderboard_id):
     thisleaderboard = Leaderboard.objects.get(id=leaderboard_id)
 
     # Get the top-N for the leaderboard
+    N = 10
     toplist = thisleaderboard.member_set.order_by('-elo')
-    N = 10 if len(toplist) > 10 else len(toplist)
 
-    toplist = toplist[:N]
+    if len(toplist) > 10:
+        toplist = toplist[:10]
 
     return render(request,
                   'leaderboard_home.html',
                   {'leaderboard': thisleaderboard,
                    'topmembers': toplist,
                    'N': N})
+
+@login_required
+def leaderboard_admin(request, leaderboard_id):
+    """Leaderboard Admin Page."""
+    this_leaderboard = Leaderboard.objects.get(id=leaderboard_id)
+
+    #Get all Members of leaderboard
+    member_list = this_leaderboard.member_set
+
+    return render(request,
+                  'leaderboard_admin.html',
+                  {'leaderboard': this_leaderboard,
+                   'member_list': member_list})
 
 def match_history(request, leaderboard_id):
     """Shows the match history of a leaderboard."""
@@ -106,12 +120,12 @@ def create_match(request, leaderboard_id):
     return render(request, 'match_create.html', {'form': form})
 
 @login_required
-def verify_match(request, match_id)
+def verify_match(request, match_id):
     """ Verify match results by editing the match """
     match = Match.objects.get(id=match_id)
     if request.method == 'POST':
+        match.state = 2
         form = VerifyMatchSignUpForm(request.POST, instance=match)
-        2 = match.state
         if form.is_valid():
             form.save()
             return render(request, 'verify_match.html', {'match':match, 'match_id':match_id, 'form':form})
