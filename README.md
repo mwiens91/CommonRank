@@ -10,4 +10,6 @@ happening in the ESSS common room. This app is for them
 
 ## See it on mobile
 
-![user home page](https://i.imgur.com/Jb9Mz5s.jpg "user home page")
+![user home page](https://i.imgur.com/zCZnusG.jpg "user home page")
+![leaderboard home page](https://i.imgur.com/t5oi7yg.jpg "leaderboard home page")
+![submit match page](https://i.imgur.com/tk9eCMj.jpg "submit match page")
