@@ -19,5 +19,10 @@ document.body.addEventListener('submit', function (event) {
 
     // Remove the match box
     parentBox.parentNode.removeChild(parentBox)
+
+    // If no matches left to verify, show a message
+    if (!document.getElementsByClassName('verifymatchbox').length) {
+      document.getElementById('no-matches').style.display = 'block'
+    }
   })
 })
