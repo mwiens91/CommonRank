@@ -73,7 +73,7 @@ class Leaderboard(models.Model):
 
     def remove_privilege(self, user):
         subject = Member.objects.get(profileuser=user)
-        subject.decrese_privilege()
+        subject.remove_privilege()
 
     def approve_member(self, user):
         subject = Member.objects.get(profileuser=user)
@@ -120,13 +120,6 @@ class Member(models.Model):
     def remove_privilege(self):
         if self.privilege >= 0:
             self.privilege -= 1
-
-    #only winners can submit matches
-    def submit_match(self,loser,leaderboard_id):
-        match = create_match(self,loser,leaderboard_id)
-        match.winner = self
-        match.loser = loser
-        match.state = 1 #unverified
 
     #only losers can verify matches
     def verify_match(self,match_id):
