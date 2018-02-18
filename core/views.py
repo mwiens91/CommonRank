@@ -8,6 +8,7 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from core.models import Leaderboard, Member, Profile, User, Match
 from core.forms import LeaderboardSignUpForm, ProfileSignUpForm, CreateMatchSignUpForm
+from core.update_elo import update_elo
 
 @login_required
 def leaderboard_create(request):
@@ -233,7 +234,11 @@ def verify_match(request, leaderboard_id, member_id, match_id):
     match.state = 2
     match.save()
 
+    # Get the instance of this leaderboard
+    thisleaderboard = Leaderboard.objects.get(id=leaderboard_id)
+
     # Update ELO
+    update_elo(match.winner, match.loser, thisleaderboard.elo_sensitivity)
 
     #if request.META['HTTP_ACCEPT'] == 'application/json':
     return JsonResponse({'match_id': match_id}, status=200)
