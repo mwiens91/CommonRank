@@ -37,7 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'timezone_field',
     'core',
+    'invitations',
 ]
 
 MIDDLEWARE = [
@@ -128,3 +131,16 @@ LOGIN_URL = 'login'
 
 # Where to go after logging in
 LOGIN_REDIRECT_URL = 'home'
+
+# Email shit
+#EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+
+#ACCOUNT_EMAIL_VERIFICATION = "none"
+#EMAIL_HOST = "smtp.gmail.com"
+#EMAIL_HOST_USER = "commonrank.invites@gmail.com"
+##EMAIL_HOST_PASSWORD = "5YonLrEf@66P"
+#EMAIL_PORT = 587
+#EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = '1025'

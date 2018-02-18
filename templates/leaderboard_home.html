@@ -13,10 +13,10 @@ The home page of a leaderboard.
 	<h2>Useful options</h2>
 	<ul>
 		<li><a href='{% url 'match_create' leaderboard.id %}'>Submit match</a></li>
-		<li>Verify matches</li>
+		<li><a href='{% url 'match_verify_list' leaderboard.id member.id %}'>Verify matches</li>
 		<li><a href='{% url 'match_history' leaderboard.id %}'>Match history</a></li>
-		<li>Rankings</li>
-		<li>Invite members</li>
+		<li><a href='{% url 'leaderboard_rankings' leaderboard.id %}'>Rankings</a></li>
+        <li><a href='{% url 'invitations:send-invite' %}'>Invite members</a></li>
 	</ul>
 
 	<h2>Top {{ N }}</h2>
@@ -43,4 +43,29 @@ The home page of a leaderboard.
 
 		</tbody>
 	</table>
+
+	<h2>{{ user.first_name }}'s upcoming matches</h2>
+	{% if upcoming_matches %}
+		<table class='upcomingmatchestable'>
+			<tbody>
+				<tr>
+					<th>Player 1</th>
+					<th>Player 2</th>
+					<th></th>
+				</tr>
+
+				{# List the upcoming matches #}
+				{% for match in upcoming_matches %}
+					<tr>
+						<td>{{ match.player1.profileuser.user.username }}</td>
+						<td>{{ match.player2.profileuser.user.username }}</td>
+						<td><a href='{% url 'match_submit_results' leaderboard.id member.id match.id %}'>submit results</a></td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+	{% else %}
+		<div>No upcoming matches :(</div>
+	{% endif %}
 {% endblock %}

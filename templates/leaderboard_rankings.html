@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% comment %}
+The rankings page of a leaderboard.
+{% endcomment %}
+
+{% block title %}{{ leaderboard.name }} | rankings{% endblock %}
+
+{% block toppagetitle %}{{ leaderboard.name }}{% endblock %}
+
+{% block content %}
+
+	<h2>Rankings</h2>
+	<table class="leaderboardtable">
+		<tbody>
+			<tr>
+				<th></th>
+				<th>Username</th>
+				<th>ELO</th>
+				<th>W/L</th>
+				<th>Win %</th>
+			</tr>
+
+			{# List the top N members of the leaderboard #}
+			{% for member in rankings %}
+				<tr>
+					<td>{{ forloop.counter }}</td>
+					<td>{{ member.profileuser.user.username }}</td>
+					<td>{{ member.elo }}</td>
+					<td>{{ member.wins }}/{{ member.losses }}</td>
+					<td>{% widthratio member.wins member.wins|add:member.losses 100 %}%</td>
+				</tr>
+			{% endfor %}
+
+		</tbody>
+	</table>
+{% endblock %}

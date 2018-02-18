@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% comment %}
+This page shows the matches that need verification by a player.
+{% endcomment %}
+
+{% block title %}{{ leaderboard.name }} | verify matches{% endblock %}
+
+{% block toppagetitle %}{{ leaderboard.name }}{% endblock %}
+
+{% block content %}
+
+	<h2 style="text-align: center">Verify matches</h2>
+
+	{# List all the matches #}
+	{% if matches %}
+		<div class="verifymatchgrid">
+			{% for match in matches %}
+				<div class="verifymatchbox">
+					<div style="flex: 1">
+						Did you lose a match to {{ match.winner.profileuser.user.username }}?
+					</div>
+					<form action="{% url 'match_verify' leaderboard.id member.id match.id %}" method="post">
+						{% csrf_token %}
+						<button type="submit">
+							yes
+						</button>
+					</form>
+
+					<form action="{% url 'match_remove' leaderboard.id member.id match.id %}" method="post">
+						{% csrf_token %}
+						<button type="submit">
+							no
+						</button>
+					</form>
+				</div>
+			{% endfor %}
+		</div>
+
+	{% else %}
+		<div style="text-align: center">No matches to verify :)</div>
+	{% endif %}
+
+{% endblock %}
+
+{% block javascript %}
+	{% load static %}
+	<script src="{% static "verify_match_listener.js" %}"></script>
+{% endblock %}

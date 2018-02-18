@@ -105,29 +105,78 @@ ul {
 	max-width: 50%;
 }
 
-/* Leaderboard table */
-.leaderboardtable {
+/* Tables */
+table {
 	table-layout: fixed;
 	border-collapse: collapse;
 }
 tbody tr:nth-child(odd) {
-  background-color: #eef;
+	background-color: #eef;
 }
 tbody th{
 	text-align: left;
 }
-tbody th:nth-child(1) {
+
+/* Leaderboard rankings table */
+.leaderboardtable tbody th:nth-child(1) {
 	width: 3em;
 }
-tbody th:nth-child(2) {
+.leaderboardtable tbody th:nth-child(2) {
 	width: 20em;
 }
-tbody th:nth-child(3) {
+.leaderboardtable tbody th:nth-child(3) {
 	width: 5em;
 }
-tbody th:nth-child(4) {
+.leaderboardtable tbody th:nth-child(4) {
 	width: 4em;
 }
-tbody th:nth-child(5) {
+.leaderboardtable tbody th:nth-child(5) {
 	width: 4em;
+}
+
+/* Match history table */
+.matchhistorytable tbody th:nth-child(1){
+	width: 20em;
+}
+.matchhistorytable tbody th:nth-child(2){
+	width: 5em;
+}
+.matchhistorytable tbody th:nth-child(3){
+	width: 20em;
+}
+.matchhistorytable tbody th:nth-child(4){
+	width: 5em;
+}
+.matchhistorytable tbody th:nth-child(5){
+	width: 5em;
+}
+
+/* Upcoming matches table */
+.upcomingmatchestable tbody th:nth-child(1){
+	width: 15em;
+}
+.upcomingmatchestable tbody th:nth-child(2){
+	width: 15em;
+}
+.upcomingmatchestable tbody th:nth-child(3){
+	width: 6.9em;
+}
+
+/* The grid showing the matches to verify */
+.verifymatchgrid{
+	display: flex;
+	flex-direction: column;
+	background-color: #fff;
+	justify-content: center;
+	align-items: center;
+}
+.verifymatchbox {
+	display: flex;
+	justify-content: end;
+	background-color: #444;
+	color: #fff;
+	border-radius: 5px;
+	max-width: 20em;
+	margin: 0.18em 0em;
+	padding: 1em;
 }
