@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
-from core.models import Leaderboard, Member, Profile
+from core.models import Leaderboard, Member, Profile, User
 from core.forms import LeaderboardSignUpForm, ProfileSignUpForm
 
 @login_required
@@ -26,11 +26,20 @@ def leaderboard_create(request):
 @login_required
 def leaderboard_home(request, leaderboard_id):
     """Leaderboard home page."""
+    # Get the instance of this leaderboard
     thisleaderboard = Leaderboard.objects.get(id=leaderboard_id)
+
+    # Get the top-N for the leaderboard
+    N = 10
+    toplist = thisleaderboard.member_set.order_by('-elo')
+
+    if length(toplist) > 10:
+        toplist = toplist[:10]
 
     return render(request,
                   'leaderboard_home.html',
-                  {'leaderboard': thisleaderboard})
+                  {'leaderboard': thisleaderboard,
+                   'topmemebers': toplist})
 
 @login_required
 def profile_home(request):
