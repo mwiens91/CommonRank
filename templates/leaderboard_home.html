@@ -12,10 +12,10 @@ The home page of a leaderboard.
 
 	<h2>Useful options</h2>
 	<ul>
-		<li><a href='{% url 'match_create' leaderboard.id %}'>Submit match</a></li>
+		<li><a href='{% url 'match_create' leaderboard.id member.id %}'>Submit match</a></li>
 		<li><a href='{% url 'match_verify_list' leaderboard.id member.id %}'>Verify matches</li>
-		<li><a href='{% url 'match_history' leaderboard.id %}'>Match history</a></li>
-		<li><a href='{% url 'leaderboard_rankings' leaderboard.id %}'>Rankings</a></li>
+		<li><a href='{% url 'match_history' leaderboard.id member.id %}'>Match history</a></li>
+		<li><a href='{% url 'leaderboard_rankings' leaderboard.id member.id %}'>Rankings</a></li>
         <li><a href='{% url 'invitations:send-invite' %}'>Invite members</a></li>
 	</ul>
 
