@@ -9,5 +9,27 @@ The home page of a leaderboard.
 {% block toppagetitle %}{{ leaderboard.name }}{% endblock %}
 
 {% block content %}
-	<p>Welcome {{ user.get_username }}!</p>
+<table class="leaderboardtable">
+	<tbody>
+		<tr>
+			<th></th>
+			<th>Username</th>
+			<th>ELO</th>
+			<th>W/L</th>
+			<th>Ratio</th>
+		</tr>
+
+		{# List the top N members of the leaderboard #}
+		{% for member in topmembers %}
+			<tr>
+				<td>{{ forloop.counter }}</td>
+				<td>{{ member.profileuser.user.username }}</td>
+				<td>{{ member.elo }}</td>
+				<td>{{ member.wins }}/{{ member.losses }}</td>
+				<td>{% widthratio member.wins member.wins|add:member.losses 100 %}</td>
+			</tr>
+		{% endfor %}
+
+	</tbody>
+</table>
 {% endblock %}
