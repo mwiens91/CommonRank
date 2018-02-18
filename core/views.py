@@ -197,12 +197,13 @@ def create_match(request, leaderboard_id):
                                     profileuser__user_id=request.user.id).filter(
                                     leaderboard_id=leaderboard_id)[0]
     leaderboard = Leaderboard.objects.get(id=leaderboard_id)
+
     if request.method == 'POST':
         form = CreateMatchSignUpForm(request.POST, leaderboard_id=leaderboard_id, my_id=player1.id)
         if form.is_valid():
             player2 = form.cleaned_data['player2']
-            if form.cleaned_data['already_played'] == True:
-                if form.cleaned_data.get('did_win'):
+            if form.cleaned_data.get('outcome') != 'postpone':
+                if form.cleaned_data.get('outcome') == 'win':
                     Match.objects.create(player1=player1, player2=player2, leaderboard=leaderboard, winner=player1, loser=player2, state=1)
                     return redirect(leaderboard_home, leaderboard_id=leaderboard_id, member_id=player1.id)
                 Match.objects.create(player1=player1, player2=player2, leaderboard=leaderboard,

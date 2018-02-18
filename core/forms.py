@@ -25,6 +25,10 @@ class LeaderboardSignUpForm(forms.ModelForm):
 
 class CreateMatchSignUpForm(forms.ModelForm):
 
+    OUTCOME_CHOICES = [['postpone', 'Schedule match for later'],
+                       ['win', 'I won'],
+                       ['loss', 'I lost']]
+
     def __init__(self, *args, **kwargs):
         leaderboard_id = kwargs.pop('leaderboard_id')
         my_id = kwargs.pop('my_id')
@@ -34,14 +38,11 @@ class CreateMatchSignUpForm(forms.ModelForm):
 
     player2 = forms.ModelChoiceField(queryset=Member.objects.none(),
                                      label="Opponent")
-    already_played = forms.BooleanField(required=False,
-                                        label="If not victory, schedule match for later?")
-    did_win = forms.BooleanField(required=False,
-                                 label="Victory?")
+    outcome = forms.ChoiceField(choices=OUTCOME_CHOICES)
 
     class Meta:
         model = Match
-        fields = ('player2', 'did_win', 'already_played')
+        fields = ('player2', 'outcome')
 
 class VerifyMatchSignUpForm(forms.ModelForm):
 
