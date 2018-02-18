@@ -17,7 +17,7 @@ This page shows the matches that need verification by a player.
 		<div class="verifymatchgrid">
 			{% for match in matches %}
 				<div class="verifymatchbox">
-					<div>
+					<div style="flex: 1">
 						Did you lose a match to {{ match.winner.profileuser.user.username }}?
 					</div>
 					<form action="{% url 'match_verify' leaderboard.id member.id match.id %}" method="post">

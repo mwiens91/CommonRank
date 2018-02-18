@@ -165,15 +165,15 @@ tbody th{
 /* The grid showing the matches to verify */
 .verifymatchgrid{
 	display: grid;
-	grid-gap: 3px;
 	background-color: #fff;
 }
 .verifymatchbox {
 	display: flex;
-	justify-content: space-between;
+	justify-content: end;
 	background-color: #444;
 	color: #fff;
 	border-radius: 5px;
 	max-width: 20em;
+	margin: 0.18em 0em;
 	padding: 1em;
 }
