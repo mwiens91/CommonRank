@@ -8,6 +8,11 @@ happening in the ESSS common room. This app is for them
 
 ## See it on desktop
 
+![](https://i.imgur.com/WVL3sHJ.png)
+![](https://i.imgur.com/gJNZauB.png)
+![](https://i.imgur.com/jmy6Uuk.png)
+![](https://i.imgur.com/oFpf8qH.png)
+
 ## See it on mobile
 
 ![user home page](https://i.imgur.com/zCZnusG.jpg "user home page")
