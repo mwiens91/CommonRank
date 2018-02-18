@@ -17,9 +17,13 @@ def leaderboard_create(request):
         form = LeaderboardSignUpForm(request.POST)
         if form.is_valid():
             thisleaderboard = form.save()
-            Member.objects.create(leaderboard=thisleaderboard,
-                                profileuser=request.user.profile,
-                                privilege=5, elo=1500)
+
+            # Add all profiles
+            for profile in form.cleaned_data.get("members"):
+                Member.objects.create(leaderboard=thisleaderboard,
+                                    profileuser=profile,
+                                    privilege=0, elo=1500)
+
             thisleaderboard.save()
             member_id = thisleaderboard.member_set.all()[0].id
             return redirect(leaderboard_home,

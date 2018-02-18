@@ -17,7 +17,7 @@ class ProfileSignUpForm(UserCreationForm):
 
 class LeaderboardSignUpForm(forms.ModelForm):
 
-    members = forms.ModelMultipleChoiceField(queryset=User.objects.all())
+    members = forms.ModelMultipleChoiceField(queryset=Profile.objects.all())
 
     class Meta:
         model = Leaderboard
