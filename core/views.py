@@ -66,7 +66,7 @@ def profile_signup(request):
 def create_match(request):
     """Create Match Page"""
     if request.method == 'POST':
-        leaderboard = Leaderboard.objects.get(id=form.leaderboard)
+        leaderboard = Leaderboard.objects.get(id=form.leaderboard.id)
         form = CreateMatchSignUpForm(request.POST, leaderboard_id=leaderboard.id)
         if form.is_valid():
             Match.objects.create(player1=request.user.profile, player2=form.player2, Leaderboard=leaderboard)
