@@ -146,7 +146,6 @@ def create_match(request, leaderboard_id):
                 return redirect(home)
             print("UHOH")
             Match.objects.create(player1=Member.objects.filter(profileuser__user_id=request.user.id)[0], player2=form.cleaned_data['player2'], leaderboard=leaderboard, state=0)
-            form.save()
             return redirect(leaderboard_home, leaderboard_id=leaderboard_id)
     else:
         form = CreateMatchSignUpForm(leaderboard_id=leaderboard_id, my_id=member_id)
