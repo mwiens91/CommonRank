@@ -5,12 +5,14 @@ from .models import User, Profile, Leaderboard, Match, Member
 
 class ProfileSignUpForm(UserCreationForm):
 
+    location = forms.CharField(max_length=30)
+    timezone = TimeZoneFormField(initial='Canada/Pacific')
     bio = forms.CharField(widget=forms.Textarea)
 
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'username', 'email',
-                    'bio')
+                    'bio', 'location', 'timezone')
 
 class LeaderboardSignUpForm(forms.ModelForm):
 
