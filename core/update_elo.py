@@ -5,9 +5,9 @@ import math
 def update_elo(winner, loser, elo_sensitivity):
     winner_games = winner.wins + winner.losses
     loser_games = loser.wins + loser.losses
-    if elo_sensitivity < 0.167: 
+    if elo_sensitivity < 0.167:
         k_factor = 8
-    elif elo_sensitivity < 0.334: 
+    elif elo_sensitivity < 0.334:
         k_factor = 16
     elif elo_sensitivity <= 0.5:
         k_factor = 24
