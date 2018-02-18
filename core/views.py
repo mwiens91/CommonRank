@@ -106,11 +106,18 @@ def match_submit_results(request, leaderboard_id, member_id, match_id):
     # Get the match
     this_match = Match.objects.get(id=match_id)
 
+    # Get the opponent's username
+    if this_match.player1.id == member_id:
+        opponent_name = this_match.player2.profileuser.user.username
+    else:
+        opponent_name = this_member.profileuser.user.username
+
     return render(request,
                   'match_submit_results.html',
                   {'leaderboard': thisleaderboard,
                    'member': this_member,
-                   'match': this_match})
+                   'match': this_match,
+                   'opponent_name': opponent_name})
 
 def match_verify_list(request, leaderboard_id, member_id):
     """Shows a list of matches a member needs to verify."""
