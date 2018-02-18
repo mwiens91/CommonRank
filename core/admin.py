@@ -5,7 +5,7 @@ class MemberInline(admin.TabularInline):
     """Show the members of a leaderboard."""
     model = Member
 
-class NotitficationInline(admin.TabularInline):
+class NotificationInline(admin.TabularInline):
     """ Show the notfications of a profile """
     model = Notification
 
